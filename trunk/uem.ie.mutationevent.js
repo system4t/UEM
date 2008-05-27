@@ -9,12 +9,12 @@ function MutationEvent() {
     this.prevValue = null;
     this.relatedNode = null;
   };
-// Inherit from UIEvent
+// Inherit from Event
 MutationEvent.prototype = new Event();
 // Reset constructor
 MutationEvent.prototype.constructor = MutationEvent;
-// We don't want to inherit initEvent
-MutationEvent.prototype.initEvent = undefined;
+// We do want to inherit initEvent
+// MutationEvent.prototype.initEvent = undefined;
 
 // Constants
 MutationEvent.MODIFICATION = 1;
@@ -31,9 +31,7 @@ MutationEvent.REMOVAL = 2;
 */
 MutationEvent.prototype.initMutationEvent =
   function(type,canBubble,cancelable,relatedNode,prevValue,newValue,attrName,attrChange) {
-    this.type = type;
-    this.bubbles = canBubble;
-    this.cancelable = cancelable;
+    this.initEvent(type, canBubble, cancelable);
     this.relatedNode = relatedNode;
     this.prevValue = prevValue;
     this.newValue = newValue;
