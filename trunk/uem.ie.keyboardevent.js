@@ -1,4 +1,5 @@
-//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-UIEvent
+// http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-KeyboardEvent
+// See trunk/uem.keyboardevent.identifiertable.js for notes on keyboard events
 
 if (document.createEventObject) {
   // Constructor
@@ -15,10 +16,6 @@ if (document.createEventObject) {
   KeyboardEvent.prototype = new UIEvent();
   // Reset constructor
   KeyboardEvent.prototype.constructor = KeyboardEvent;
-  // We do want to inherit initUIEvent
-  // KeyboardEvent.prototype.initUIEvent = undefined;
-  // We don't want to inherit the detail property.
-  // KeyboardEvent.prototype.detail = undefined;
 
   // Constants
   KeyboardEvent.DOM_KEY_LOCATION_STANDARD = 0;
@@ -43,12 +40,13 @@ if (document.createEventObject) {
    */
   KeyboardEvent.prototype.initKeyboardEvent =
     function(type,canBubble,cancelable,view,keyIdentifier,keyLocation,modifiersList) {
-    this.initUIEvent(type, canBubble, cancelable, view, 0);
-    this.detail = undefined;
-    this.keyIdentifier = keyIdentifier;
-    this.keyLocation = keyLocation;
-    // Don't know yet what to do with modifiersList
-  };
+      this.initUIEvent(type, canBubble, cancelable, view, 0);
+      this.detail = undefined;
+      this.keyIdentifier = keyIdentifier;
+      this.keyLocation = keyLocation;
+      // Don't know yet what to do with modifiersList
+      this.modifierList = modifierList;
+    };
 
   //DOM 3 Methods
   KeyboardEvent.prototype.getModifierState =
