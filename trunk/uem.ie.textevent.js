@@ -1,4 +1,4 @@
-//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-UIEvent
+//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-TextEvent
 
 if (document.createEventObject) {
   // Constructor
@@ -10,11 +10,7 @@ if (document.createEventObject) {
   TextEvent.prototype = new UIEvent();
   // Reset constructor
   TextEvent.prototype.constructor = TextEvent;
-  // We do want to inherit initUIEvent
-  // TextEvent.prototype.initUIEvent = undefined;
-  // We don't want to inherit the detail property
-  // TextEvent.prototype.detail = undefined;
-
+ 
   // Methods
   /**
    * Initialize an event object.  Keyword 'this' is an event object.
