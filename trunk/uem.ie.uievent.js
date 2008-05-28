@@ -3,6 +3,7 @@
 if (document.createEventObject) {
   // Constructor
   function UIEvent() {
+    // Rest of properties should be set with initUIEvent
     this.detail = null;
     this.view = window;
     // Extend to include all properties of Event object
@@ -11,8 +12,6 @@ if (document.createEventObject) {
   UIEvent.prototype = new Event();
   // Reset constructor
   UIEvent.prototype.constructor = UIEvent;
-  // We do want to inherit initEvent
-  // UIEvent.prototype.initEvent = undefined;
 
   // Methods
   /**
