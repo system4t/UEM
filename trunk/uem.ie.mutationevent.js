@@ -1,8 +1,8 @@
-//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-UIEvent
+// http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-MutationEvent
 
 if (document.createEventObject) {
 // Constructor
-function MutationEvent() {
+function MutationEvent(e) {
     this.attrChange = null;
     this.attrName = null;
     this.newValue = null;
@@ -13,8 +13,6 @@ function MutationEvent() {
 MutationEvent.prototype = new Event();
 // Reset constructor
 MutationEvent.prototype.constructor = MutationEvent;
-// We do want to inherit initEvent
-// MutationEvent.prototype.initEvent = undefined;
 
 // Constants
 MutationEvent.MODIFICATION = 1;
