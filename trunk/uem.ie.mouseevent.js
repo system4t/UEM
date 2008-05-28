@@ -1,4 +1,4 @@
-//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-UIEvent
+//http://www.w3.org/TR/2003/NOTE-DOM-Level-3-Events-20031107/events.html#Events-MouseEvent
 
 if (document.createEventObject) {
   // Constructor
@@ -18,8 +18,6 @@ if (document.createEventObject) {
   MouseEvent.prototype = new UIEvent();
   // Reset constructor
   MouseEvent.prototype.constructor = MouseEvent;
-  // We do want to inherit initUIEvent
-  // MouseEvent.prototype.initUIEvent = undefined;
 
   // Methods
   /**
