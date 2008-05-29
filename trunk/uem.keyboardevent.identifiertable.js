@@ -49,7 +49,7 @@
 //    int attribute keyLocation.  Neither IE nor Mozilla pass this information.
 //    
 
-KeyboardEvent.keyCodeNoShiftToKeyIdentifier = [
+UEM.keyCodeNoShiftToKeyIdentifier = [
   "", "", "", "", "", "", "Help", "", "U+0008", "U+0009",
   "", "", "Clear", "Return", "Enter", "", "Shift", "Control", "Alt", "Pause",
   "CapsLock", "", "", "", "", "", "", "U+001B", "", "",
@@ -74,7 +74,7 @@ KeyboardEvent.keyCodeNoShiftToKeyIdentifier = [
   "", "", "", "", "", "", "", "", "", "U+005B",
   "U+005C", "U+005D", "U+0027", "", "Meta"];
 
-KeyboardEvent.keyIdentifierNoShiftToKeyCode =
+UEM.keyIdentifierNoShiftToKeyCode =
   function(keyIdentifier) {
     if ("U+0030" <= keyIdentifier && keyIdentifier <= "U+0039")
         return UEM.uCodeToInt(keyIdentifier.substr(4, 2));
@@ -147,7 +147,7 @@ KeyboardEvent.keyIdentifierNoShiftToKeyCode =
     return 0;
   };
 
-KeyboardEvent.keyCodeShiftToKeyIdentifier = [
+UEM.keyCodeShiftToKeyIdentifier = [
   "", "", "", "", "", "", "Help", "", "U+0008", "U+0009",
   "", "", "Clear", "Return", "Enter", "", "Shift", "Control", "Alt", "Pause",
   "CapsLock", "", "", "", "", "", "", "U+001B", "", "",
@@ -172,7 +172,7 @@ KeyboardEvent.keyCodeShiftToKeyIdentifier = [
   "", "", "", "", "", "", "", "", "", "U+007B",
   "U+007C", "U+007D", "U+0022", "", "Meta"];
 
-Keyboard.keyIdentifierShiftToKeyCode =
+UEM.keyIdentifierShiftToKeyCode =
   function(keyIdentifier) {
     if ("U+0030" <= keyIdentifier && keyIdentifier <= "U+0039")
         return UEM.uCodeToInt(keyIdentifier.substr(4, 2) + 48);
@@ -256,7 +256,7 @@ Keyboard.keyIdentifierShiftToKeyCode =
   };
 
 // Utility methods
-KeyboardEvent.uCodeToInt =
+UEM.uCodeToInt =
   function(uCode) {
     var n = 0;
     for (var i = 0; i < 2; i++) {
