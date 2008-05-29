@@ -197,12 +197,11 @@ if (document.createEventObject) {
    */
     // Define createEvent
   document.createEvent =
-    function(eventClassArg, e) {
-      var eventClass = eventClassArg.substring(0, eventClassArg.length - 1);
+    function(eventClass, e) {
       // We are holding back on MutationEvent and KeyboardEvent
-      if (eventClass == 'Event' || 'HTMLEvent' || 'UIEvent' || 'TextEvent' || 'MouseEvent' || 'KeyboardEvent' || eventClass == 'MutationEvent') {
+      if (eventClass == 'Event' || eventClass == 'HTMLEvent' || eventClass == 'UIEvent' || eventClass == 'TextEvent' || eventClass == 'MouseEvent' || eventClass == 'KeyboardEvent' || eventClass == 'MutationEvent') {
         if (eventClass == 'HTMLEvent') eventClass = 'Event';
-        return new window[eventClass](e);
+          return new window[eventClass](e);
       }
       else
         throw new Error('UEM: Event class not supported.');
@@ -579,10 +578,8 @@ if (document.createEventObject) {
 
   UEM.createEventObject =
     function(ie_event) {
-      // Get event type
-      var type = ie_event.type;
       // Get event class
-      var eClass = UEM.getEventClass(type);
+      var eClass = UEM.getEventClass(ie_event.type);
       // Construct object
       var e = new window[eClass](ie_event);
       // Init UEM Event properties: currentTarget, eventPhase, target, timeStamp
@@ -612,8 +609,10 @@ if (document.createEventObject) {
           var button = UEM.getButton(ie_event.button);
           // Element which is related to the element firing the event
           var relatedTarget = null;
-          if (ie_event.type == 'mouseout') relatedTarget = ie_event.toElement;
-          else if (ie_event.type == 'mouseover') relatedTarget = ie_event.fromElement;
+          if (ie_event.type == 'mouseout')
+            relatedTarget = ie_event.toElement;
+          else if (ie_event.type == 'mouseover')
+            relatedTarget = ie_event.fromElement;
           e.initMouseEvent(ie_event.type, bubbles, cancelable, window, detail, ie_event.screenX, ie_event.screenY, ie_event.clientX, ie_event.clientY, ie_event.ctrlKey, ie_event.altKey, ie_event.shiftKey,null, button, relatedTarget);
           break;
         case 'TextEvent':
@@ -655,20 +654,19 @@ if (document.createEventObject) {
           */
           break;
         case 'MutationEvent':
+          // Not used at the moment
+          /*
           var relatedNode = null;
           var prevValue = null;
           var newValue = null;
           var attrName = null;
           var attrChange = null;
           e.initMutationEvent(ie_event.type, bubbles, cancelable, relatedNode, prevValue, newValue, attrName, attrChange);
+          */
           break;
         default:  
           break;
       }
-            // Init Event properties: type, canBubble, cancelable)
-      e.type = type;
-      e.bubbles = bubbles;
-      e.cancelable = cancelable;
       return e;
     };
 
