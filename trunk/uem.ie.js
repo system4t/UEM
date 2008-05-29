@@ -52,26 +52,6 @@ if (document.createEventObject) {
   // for increased performance.
   // Default value is 1. Set to 0 to turn off
   UEM.WATCH_PROPERTIES = 1;
-  
-  // Enable support for the W3C DOM 3 Event methods
-  // in DOM 2 Event interfaces for those event
-  // interfaces which are enabled
-  // Default value is 0. Set to 1 to turn on
-  UEM.ENABLE_W3C_DOM3_FEATURES = 0;
-  
-  // Enable support for the W3C TextEvent interface.
-  // This is a DOM 3 interface.
-  // Default value is 0. Set to 1 to turn on
-  UEM.ENABLE_W3C_TEXT_EVENT = 0;
-  
-  // Enable support for the W3C KeyboardEvent interface.
-  // This is a DOM 3 interface.
-  // Default value is 0. Set to 1 to turn on
-  UEM.ENABLE_W3C_KEYBOARD_EVENT = 0;
-  
-  // Enable support for the W3C MutationEvent interface.
-  // Default value is 0. Set to 1 to turn on
-  UEM.ENABLE_W3C_MUTATION_EVENT = 0;
 
   // THERE ARE NO CONFIGURABLE SETTINGS BELOW THIS LINE
 
@@ -336,7 +316,7 @@ if (document.createEventObject) {
   // http://www.w3.org/TR/1999/REC-html401-19991224/sgml/dtd.html
   UEM.elementEventTypes =
     {
-      allTags: ['click', 'dblclick', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'],
+      allTags: ['activate', 'click', 'dblclick', 'focusin', 'focusout', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'],
       a: ['blur','focus'],
       body: ['load','unload'],
       button: ['blur','focus'],
@@ -638,13 +618,13 @@ if (document.createEventObject) {
           break;
         case 'TextEvent':
           var data = String.fromCharCode(ie_event.keyCode)
-          e.initUIEvent(ie_event.type, bubbles, cancelable, window, data);
+          e.initTextEvent(ie_event.type, bubbles, cancelable, window, data);
           break;
         case 'KeyboardEvent':
           // Not used at the moment
           /*
           var modifiersList = '';
-          var keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier(windowevent.keyCode);
+          var keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier[ie_event.keyCode];
           if (!keyIdentifier) {
             var hexCode = e.keyCode.toString(16);
             for (var i = 0; i < hexCode - 4; i++)
@@ -659,15 +639,19 @@ if (document.createEventObject) {
           else if (e.keyIdentifier == 'Alt')
             keyLocation = e.altLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
           // Left Win
-          else if (windowevent.keyCode == 91) 
+          else if (ie_event.keyCode == 91) 
             keyLocation = KeyboardEvent.DOM_KEY_LOCATION_LEFT;
           // Right Win
-          else if (windowevent.keyCode == 92) 
+          else if (ie_event.keyCode == 92) 
             keyLocation = KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
           // Number pad
-          else if (96 <= windowevent.keyCode && windowevent.keyCode <= 105) 
+          else if (96 <= ie_event.keyCode && ie_event.keyCode <= 105) 
             keyLocation = KeyboardEvent.DOM_KEY_LOCATION_NUMPAD;
-          e.initKeyboardEvent(windowevent.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
+          if (ie_event.ctrlKey) modifiersList += " Control";
+          if (ie_event.altKey) modifiersList += " Alt";
+          if (ie_event.shiftKey) modifiersList += " Shift";
+          if (modifiersList.length > 0) modifiersList = modifiersList.substring(1);
+          e.initKeyboardEvent(ie_event.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
           */
           break;
         case 'MutationEvent':
@@ -676,7 +660,7 @@ if (document.createEventObject) {
           var newValue = null;
           var attrName = null;
           var attrChange = null;
-          e.initMutationEvent(windowevent.type, bubbles, cancelable, relatedNode, prevValue, newValue, attrName, attrChange);
+          e.initMutationEvent(ie_event.type, bubbles, cancelable, relatedNode, prevValue, newValue, attrName, attrChange);
           break;
         default:  
           break;
