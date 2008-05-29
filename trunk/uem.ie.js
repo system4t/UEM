@@ -586,10 +586,10 @@ if (document.createEventObject) {
       e.initUEMEvent(ie_event);
       // Determine general properties
       // If bubbling is enabled check whether event type actually bubbles
-      var bubbles = ie_event.cancelBubble === false ? UEM.eventTable[ie_event.type] : true;
+      var bubbles = ie_event.cancelBubble === false ? UEM.doesBubble(ie_event.type) : true;
       // If canceling is enabled (or not set at all) check whether event type can actually be cancelled
       // The cancelable property is set by Event.prototype.toIE when event is created from Element.dispatch
-      var cancelable = ie_event.cancelable !== false || ie_event.cancelable === undefined ? UEM.eventTable[ie_event.type] : false;
+      var cancelable = ie_event.cancelable !== false || ie_event.cancelable === undefined ? UEM.isCancelable(ie_event.type) : false;
       // Switch on event class
       switch(eClass) {
         case 'Event':
@@ -645,10 +645,15 @@ if (document.createEventObject) {
           // Number pad
           else if (96 <= ie_event.keyCode && ie_event.keyCode <= 105) 
             keyLocation = KeyboardEvent.DOM_KEY_LOCATION_NUMPAD;
-          if (ie_event.ctrlKey) modifiersList += " Control";
-          if (ie_event.altKey) modifiersList += " Alt";
-          if (ie_event.shiftKey) modifiersList += " Shift";
-          if (modifiersList.length > 0) modifiersList = modifiersList.substring(1);
+          if (ie_event.ctrlKey)
+            modifiersList += " Control";
+          if (ie_event.altKey)
+            modifiersList += " Alt";
+          if (ie_event.shiftKey)
+            modifiersList += " Shift";
+          // Remove leading space
+          if (modifiersList.length > 0)
+            modifiersList = modifiersList.substring(1);
           e.initKeyboardEvent(ie_event.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
           break;
         case 'MutationEvent':
