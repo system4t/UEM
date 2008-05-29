@@ -683,7 +683,7 @@ if (document.createEventObject) {
       }
             // Init Event properties: type, canBubble, cancelable)
       e.type = type;
-      e.bubbles = canBubble;
+      e.bubbles = bubbles;
       e.cancelable = cancelable;
       return e;
     };
