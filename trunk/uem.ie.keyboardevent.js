@@ -44,8 +44,10 @@ if (document.createEventObject) {
       this.detail = undefined;
       this.keyIdentifier = keyIdentifier;
       this.keyLocation = keyLocation;
-      // Don't know yet what to do with modifiersList
-      this.modifierList = modifierList;
+      this.ctrlKey = (modifiersList.indexOf('Control') >= 0);
+      this.altKey = (modifiersList.indexOf('Alt') >= 0);
+      this.shiftKey = (modifiersList.indexOf('Shift') >= 0);
+      this.metaKey = null;
     };
 
   //DOM 3 Methods
