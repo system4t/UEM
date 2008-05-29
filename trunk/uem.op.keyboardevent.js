@@ -1,6 +1,9 @@
 // KeyboardEvent for Opera
 
 if (window.opera == "Opera") {
+  
+  UEM = {};
+
 /**
  * Keypress handler that adds the data property to the event.  This is a
  * capture phase and unless the developer gets creative, the first such capture
