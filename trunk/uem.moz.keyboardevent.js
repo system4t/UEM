@@ -52,7 +52,7 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
           e.keyIdentifier = "U+002D"; // Minus
       }
       e.keyLocation = 0;
-    };,
+    },
     true
   );
   
@@ -78,7 +78,7 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
           e.keyIdentifier = "U+002D"; // Minus
       }
       e.keyLocation = 0;
-    };,
+    },
     true
   );
   /**
