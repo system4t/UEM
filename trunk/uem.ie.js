@@ -621,7 +621,6 @@ if (document.createEventObject) {
           break;
         case 'KeyboardEvent':
           // Not used at the moment
-          /*
           var modifiersList = '';
           var keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier[ie_event.keyCode];
           if (!keyIdentifier) {
@@ -631,12 +630,12 @@ if (document.createEventObject) {
             keyIdentifier = "U+" + hexCode;
           }
           var keyLocation = KeyboardEvent.DOM_KEY_LOCATION_STANDARD;
-          if (e.keyIdentifier == 'Control')
-            keyLocation = e.ctrlLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-          else if (e.keyIdentifier == 'Shift') 
-            keyLocation = e.shiftLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-          else if (e.keyIdentifier == 'Alt')
-            keyLocation = e.altLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          if (keyIdentifier == 'Control')
+            keyLocation = ie_event.ctrlLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          else if (keyIdentifier == 'Shift') 
+            keyLocation = ie_event.shiftLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          else if (keyIdentifier == 'Alt')
+            keyLocation = ie_event.altLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
           // Left Win
           else if (ie_event.keyCode == 91) 
             keyLocation = KeyboardEvent.DOM_KEY_LOCATION_LEFT;
@@ -651,7 +650,6 @@ if (document.createEventObject) {
           if (ie_event.shiftKey) modifiersList += " Shift";
           if (modifiersList.length > 0) modifiersList = modifiersList.substring(1);
           e.initKeyboardEvent(ie_event.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
-          */
           break;
         case 'MutationEvent':
           // Not used at the moment
