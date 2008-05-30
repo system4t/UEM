@@ -104,24 +104,39 @@ if (document.createEventObject) {
   Event.prototype.toIE =
     function() {
       var e = document.createEventObject();
-      e.altKey = this.altKey;
-      // Needs tranlating back to IE
-      e.button = UEM.getIEbutton;
+      e.type = this.type;
+      var eventClass = UEM.eventTable[e.type];
       // Reverse this.bubbles  
       e.cancelBubble = !this.bubbles;
       // We need to save whether to cancel or not
       e.cancelable = this.cancelable;
-      e.clientX = this.clientX; 
-      e.clientY = this.clientY; 
-      e.ctrlKey = this.ctrlKey;  
-      e.fromElement = this.relatedTarget;  
-      e.keyCode = this.keyCode;  
-      e.screenX = this.screenX;
-      e.screenY = this.screenY;  
-      e.shiftKey = this.shiftKey;  
-      e.srcElement = this.target;  
-      e.toElement = this.target; 
-      e.type = this.type;
+      e.srcElement = this.target; 
+      if (eventClass == 'Event') return;
+      if (eventClass == 'MouseEvent') {
+        // Needs tranlating back to IE
+        e.button = UEM.getIEbutton(this.button);
+        e.clientX = this.clientX; 
+        e.clientY = this.clientY; 
+        if (e.type == 'mouseover') e.fromElement = this.relatedTarget;
+        if (e.type == 'mouseout') e.toElement = this.relatedTarget;
+        e.screenX = this.screenX;
+        e.screenY = this.screenY;
+        e.shiftKey = this.shiftKey;
+        e.ctrlKey = this.ctrlKey;
+        e.altKey = this.altKey;
+      }
+      else if (eventClass == 'KeyboardEvent') {
+        e.shiftKey = this.shiftKey;
+        e.ctrlKey = this.ctrlKey;
+        e.altKey = this.altKey;
+      }
+      //this.keyCode does not exist...........Need a fix.
+      else if (eventClass == 'KeyboardEvent') {
+        e.keyCode = UEM.keyIdentifierNoShiftToKeyCode(this.keyIdentifier);
+      }
+      else if (eventClass == 'TextEvent') {
+        e.keyCode = this.data.charCodeAt(0);
+      }
       return e;  
     };
   /**
