@@ -11,7 +11,7 @@ if (document.createEventObject) {
     this.metaKey = null;
     this.shiftKey = null;
     this.detail = undefined;
-  };
+  }
   // Inherit from UIEvent
   KeyboardEvent.prototype = new UIEvent();
   // Reset constructor

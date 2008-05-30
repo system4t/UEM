@@ -7,7 +7,7 @@ if (document.createEventObject) {
     this.detail = null;
     this.view = window;
     // Extend to include all properties of Event object
-  };
+  }
   // Inherit from Event
   UIEvent.prototype = new Event();
   // Reset constructor
