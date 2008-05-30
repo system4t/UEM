@@ -197,11 +197,15 @@ if (document.createEventObject) {
    */
     // Define createEvent
   document.createEvent =
-    function(eventClass, e) {
+    function(eventClassArg, e) {
       // We are holding back on MutationEvent and KeyboardEvent
-      if (eventClass == 'Event' || eventClass == 'HTMLEvent' || eventClass == 'UIEvent' || eventClass == 'TextEvent' || eventClass == 'MouseEvent' || eventClass == 'KeyboardEvent' || eventClass == 'MutationEvent') {
-        if (eventClass == 'HTMLEvent') eventClass = 'Event';
-          return new window[eventClass](e);
+      if (eventClassArg == 'Events' || eventClassArg == 'HTMLEvents' || eventClassArg == 'UIEvents' || eventClassArg == 'TextEvents' || eventClassArg == 'MouseEvents' || eventClassArg == 'KeyboardEvents' || eventClassArg == 'MutationEvents') {
+        // Map HTMLEvents to Event.
+        var eventClass = null;
+        if (eventClassArg == 'HTMLEvents') eventClass = 'Event';
+        // remove the terminal 's'
+        else eventClass = eventClassArg.substring(0,eventClassArg.length-1);
+        return new window[eventClass](e);
       }
       else
         throw new Error('UEM: Event class not supported.');
