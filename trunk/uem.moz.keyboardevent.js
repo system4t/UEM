@@ -87,7 +87,7 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   function TextEvent() {
     this.data = null;
   }
-  TextEvent.prototype = new UIEvent();
+  TextEvent.prototype = document.createEvent("UIEvents");
 
   /**
    * Initialize a TextEvent.   Keyword 'this' is a window.event object.
@@ -129,7 +129,7 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
      *    and 3 for numpad.
      * @param modifierList String containing "Alt", "Control", "Meta", and/or "Shift".
      */
-    UEMEvent.prototype.initKeyboardEvent =
+    TextEvent.prototype.initKeyboardEvent =
       function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
       if (TRACE) EPE.appendTrace("initKeyboardEvent()");
       var ishift = modifierList.contains(/Shift/);
