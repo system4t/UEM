@@ -7,11 +7,28 @@ if (navigator.product == "Safari" || navigator.product == "Gecko" && navigator.v
  * phase handler for keypress events.  This means that this handler will make
  * the data property available to all other keypress event handlers.
  */
-  var f1 = function(e) {
-    if (e.charCode) e.data = String.fromCharCode(e.keyCode);
-  };
-  document.addEventListener("keypress", f1, true);
+  document.addEventListener("keypress", 
+    function(e) {
+      if (e.charCode) e.data = String.fromCharCode(e.keyCode);
+    }
+    , true);
  // The JavaScript Madness page at http://unixpapa.com/js/key.html says that
  // Safari (miraculously) gets the keyup and keydown events right.  Documentation
  // about any initialization methods is nonexistent.
+  document.addEventListener("keyup", 
+    function(e) {
+      if (UEM.getW3CKeyIdentifier) {
+        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+      }
+      e.keyLocation = 0;
+    }
+    , true);
+  document.addEventListener("keydown", 
+    function(e) {
+      if (UEM.getW3CKeyIdentifier) {
+        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+      }
+      e.keyLocation = 0;
+    }
+    , true);
 }

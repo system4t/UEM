@@ -11,12 +11,15 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
    * phase handler for keypress events.  This means that this handler will make
    * the data property available to all other keypress event handlers.
   */
-  // To Allan: This function used to be named f1
   document.addEventListener(
     "keypress",
     function(e) {
-      if (e.charCode)
+      if (e.charCode) {
         e.data = String.fromCharCode(e.charCode);
+      }
+      if (e.charCode == 0) {
+        e.stopPropagation();
+      }
     },
     true
   );
@@ -32,27 +35,23 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   // Now declaring the same function twise in order to avoid declaring in global namespace
   // Although redundant it doesn't really matter as this code is only executed once when
   // the document loads
-  // To Allan: This function used to be called f1
   document.addEventListener(
     "keyup",
     function(e) {
-      if (e.shiftKey) {
-        e.keyIdentifier = UEM.keyCodeShiftToKeyIdentifier[e.keyCode];
-        if (e.keyCode == 59)
-          e.keyIdentifier = "U+003A"; // Colon
-        else if (e.keyCode == 61)
-          e.keyIdentifier = "U+002B"; // Plus
-        else if (e.keyCode == 109)
-          e.keyIdentifier = "U+005F"; // Underscore
-      }
-      else {
-        e.keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier[e.keyCode];
-        if (e.keyCode == 59)
-          e.keyIdentifier = "U+003B"; // Semicolon
-        else if (e.keyCode == 61)
-          e.keyIdentifier = "U+003D"; // Equals
-        else if (e.keyCode == 109)
-          e.keyIdentifier = "U+002D"; // Minus
+      if (UEM.getW3CKeyIdentifier) {
+        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+        if (e.keyCode == 59) {
+          // Semicolon
+          e.keyIdentifier = "U+003B";
+        }
+        else if (e.keyCode == 61) {
+          // Equals
+          e.keyIdentifier = "U+003D";
+        }
+        else if (e.keyCode == 109) {
+          // Minus
+          e.keyIdentifier = "U+002D";
+        }
       }
       e.keyLocation = 0;
     },
@@ -62,23 +61,20 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   document.addEventListener(
     "keydown",
     function(e) {
-      if (e.shiftKey) {
-        e.keyIdentifier = UEM.keyCodeShiftToKeyIdentifier[e.keyCode];
-        if (e.keyCode == 59)
-          e.keyIdentifier = "U+003A"; // Colon
-        else if (e.keyCode == 61)
-          e.keyIdentifier = "U+002B"; // Plus
-        else if (e.keyCode == 109)
-          e.keyIdentifier = "U+005F"; // Underscore
-      }
-      else {
-        e.keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier[e.keyCode];
-        if (e.keyCode == 59)
-          e.keyIdentifier = "U+003B"; // Semicolon
-        else if (e.keyCode == 61)
-          e.keyIdentifier = "U+003D"; // Equals
-        else if (e.keyCode == 109)
-          e.keyIdentifier = "U+002D"; // Minus
+      if (UEM.getW3CKeyIdentifier) {
+        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+        if (e.keyCode == 59) {
+          // Semicolon
+          e.keyIdentifier = "U+003B";
+        }
+        else if (e.keyCode == 61) {
+          // Equals
+          e.keyIdentifier = "U+003D";
+        }
+        else if (e.keyCode == 109) {
+          // Minus
+          e.keyIdentifier = "U+002D";
+        }
       }
       e.keyLocation = 0;
     },
@@ -100,7 +96,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   */
   TextEvent.prototype.initTextEvent =
     function(type, canBubble, cancelable, view, data) {
-    if (TRACE) EPE.appendTrace("initTextEvent()");
     var charCode = data.charCodeAt(0);
     var keyCode = charCode;
     var iShift = (62 <= keyCode && keyCode <= 90 ||
@@ -131,7 +126,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
      */
     TextEvent.prototype.initKeyboardEvent =
       function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
-      if (TRACE) EPE.appendTrace("initKeyboardEvent()");
       var ishift = modifierList.contains(/Shift/);
       var keyCode;
       if (ishift)

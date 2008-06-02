@@ -11,6 +11,8 @@ if (document.createEventObject) {
     this.metaKey = null;
     this.shiftKey = null;
     this.detail = undefined;
+    // Carry keycode for the case where the code does not load the keyboard event maps.
+    this.keycode = undefined;
   }
   // Inherit from UIEvent
   KeyboardEvent.prototype = new UIEvent();
