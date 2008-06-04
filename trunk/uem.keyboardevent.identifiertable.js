@@ -57,8 +57,8 @@ UEM.keyCodeNoShiftToKeyIdentifier = [
   "CapsLock", "HangulMode", "", "", "FinalMode", "KanjiMode", "", "U+001B", "", "",
   "", "", "U+0020", "PageUp", "PageDown", "End", "Home", "Left", "Up", "Right",
   "Down", "Select", "", "Execute", "PrintScreen", "Insert", "U+007F", "Help", "U+0030", "U+0031",
-  "U+0032", "U+0033", "U+0034", "U+0035", "U+0036", "U+0037", "U+0038", "U+0039", "", "U+003B",
-  "", "U+003D", "", "", "", "U+0041", "U+0042", "U+0043", "U+0044", "U+0045",
+  "U+0032", "U+0033", "U+0034", "U+0035", "U+0036", "U+0037", "U+0038", "U+0039", "", "",
+  "", "", "", "", "", "U+0041", "U+0042", "U+0043", "U+0044", "U+0045",
   "U+0046", "U+0047", "U+0048", "U+0049", "U+004A", "U+004B", "U+004C", "U+004D", "U+004E", "U+004F",
   "U+0050", "U+0051", "U+0052", "U+0053", "U+0054", "U+0055", "U+0056", "U+0057", "U+0058", "U+0059",
   "U+005A", "Win", "", "Apps", "", "", "U+0030", "U+0031", "U+0032", "U+0033",
@@ -82,9 +82,12 @@ UEM.keyIdentifierNoShiftToKeyCode =
         return UEM.uCodeToInt(keyIdentifier.substr(4, 2));
     if ("U+0041" <= keyIdentifier && keyIdentifier <= "U+005A")
         return UEM.uCodeToInt(keyIdentifier.substr(4, 2) - 32);
-    if (keyIdentifier == "U+0018") return 3; // Cancel
-    if (keyIdentifier == "U+0008") return 8; // Backspace
-    if (keyIdentifier == "U+0009") return 9; // Horizontal tab
+    // Cancel
+    if (keyIdentifier == "U+0018") return 3;
+     // Backspace
+    if (keyIdentifier == "U+0008") return 8;
+     // Horizontal tab
+    if (keyIdentifier == "U+0009") return 9;
     if (keyIdentifier == "Clear") return 12;
     if (keyIdentifier == "Enter") return 13;
     if (keyIdentifier == "Shift") return 16;
@@ -111,10 +114,8 @@ UEM.keyIdentifierNoShiftToKeyCode =
     if (keyIdentifier == "Insert") return 45;
     if (keyIdentifier == "U+007F") return 46; // Delete
     if (keyIdentifier == "Help") return 47;
-    if (keyIdentifier == "U+0021") return 49; // Exclamation
     if (keyIdentifier == "Win") return 91;
     if (keyIdentifier == "Apps") return 93;
-    if (keyIdentifier == "U+002B") return 107; // Plus (keypad)
     if (keyIdentifier == "F1") return 112;
     if (keyIdentifier == "F2") return 113;
     if (keyIdentifier == "F3") return 114;
@@ -159,17 +160,28 @@ UEM.keyIdentifierNoShiftToKeyCode =
     if (keyIdentifier == "SelectMedia") return 181;
     if (keyIdentifier == "LaunchApplication1") return 182;
     if (keyIdentifier == "LaunchApplication2") return 183;
-    if (keyIdentifier == "U+003B") return 186; // Semicolon
-    if (keyIdentifier == "U+003D") return 187; // Equals
-    if (keyIdentifier == "U+002C") return 188; // Comma
-    if (keyIdentifier == "U+002D") return 189; // Minus
-    if (keyIdentifier == "U+002E") return 190; // Period
-    if (keyIdentifier == "U+002F") return 191; // Slash
-    if (keyIdentifier == "U+0060") return 192; // Grave Accent
-    if (keyIdentifier == "U+005B") return 219; // Left Bracket
-    if (keyIdentifier == "U+005C") return 220; // Backslash
-    if (keyIdentifier == "U+005D") return 221; // Right Bracket
-    if (keyIdentifier == "U+0027") return 222; // Apostrophe
+    // Semicolon
+    if (keyIdentifier == "U+003B") return 186;
+    // Equals
+    if (keyIdentifier == "U+003D") return 187;
+    // Comma
+    if (keyIdentifier == "U+002C") return 188;
+    // Minus
+    if (keyIdentifier == "U+002D") return 189;
+    // Period
+    if (keyIdentifier == "U+002E") return 190;
+    // Slash
+    if (keyIdentifier == "U+002F") return 191;
+    // Grave Accent
+    if (keyIdentifier == "U+0060") return 192;
+    // Left Bracket
+    if (keyIdentifier == "U+005B") return 219;
+    // Backslash
+    if (keyIdentifier == "U+005C") return 220;
+    // Right Bracket
+    if (keyIdentifier == "U+005D") return 221;
+    // Apostrophe
+    if (keyIdentifier == "U+0027") return 222;
     if (keyIdentifier == "Meta") return 224;
     return 0;
   };
@@ -180,13 +192,13 @@ UEM.keyCodeShiftToKeyIdentifier = [
   "CapsLock", "HangulMode", "", "", "FinalMode", "KanjiMode", "", "U+001B", "", "",
   "", "", "U+0020", "PageUp", "PageDown", "End", "Home", "Left", "Up", "Right",
   "Down", "Select", "", "Execute", "PrintScreen", "Insert", "U+007F", "Help", "U+0029", "U+0021",
-  "U+0040", "U+0023", "U+0024", "U+0025", "U+005E", "U+0026", "U+002A", "U+0028", "", "U+003A",
-  "", "U+002B", "", "", "", "U+0041", "U+0042", "U+0043", "U+0044", "U+0045",
+  "U+0040", "U+0023", "U+0024", "U+0025", "U+005E", "U+0026", "U+002A", "U+0028", "", "",
+  "", "", "", "", "", "U+0041", "U+0042", "U+0043", "U+0044", "U+0045",
   "U+0046", "U+0047", "U+0048", "U+0049", "U+004A", "U+004B", "U+004C", "U+004D", "U+004E", "U+004F",
   "U+0050", "U+0051", "U+0052", "U+0053", "U+0054", "U+0055", "U+0056", "U+0057", "U+0058", "U+0059",
   "U+005A", "Win", "", "Apps", "", "", "U+0030", "U+0031", "U+0032", "U+0033",
   "U+0034", "U+0035", "U+0036", "U+0037", "U+0038", "U+0039", "U+002A", "U+002B", "", "U+002D",
-  "", "U+002F", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+  "U+002E", "U+002F", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
   "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18",
   "F19", "F20", "F21", "F22", "F23", "F24", "", "", "", "",
   "", "", "", "", "NumLock", "Scroll", "", "", "", "",
@@ -204,10 +216,13 @@ UEM.keyIdentifierShiftToKeyCode =
     if ("U+0030" <= keyIdentifier && keyIdentifier <= "U+0039")
         return UEM.uCodeToInt(keyIdentifier.substr(4, 2) + 48);
     if ("U+0041" <= keyIdentifier && keyIdentifier <= "U+005A")
-      return UEM.uCodeToInt(keyIdentifier.substr(4, 2)); 
-    if (keyIdentifier == "U+0018") return 3; // Cancel
-    if (keyIdentifier == "U+0008") return 8; // Backspace
-    if (keyIdentifier == "U+0009") return 9; // Horizontal tab
+      return UEM.uCodeToInt(keyIdentifier.substr(4, 2));
+    // Cancel
+    if (keyIdentifier == "U+0018") return 3;
+    // Backspace
+    if (keyIdentifier == "U+0008") return 8;
+    // Horizontal tab
+    if (keyIdentifier == "U+0009") return 9;
     if (keyIdentifier == "Clear") return 12;
     if (keyIdentifier == "Enter") return 13;
     if (keyIdentifier == "Shift") return 16;
@@ -218,8 +233,10 @@ UEM.keyIdentifierShiftToKeyCode =
     if (keyIdentifier == "HangulMode") return 21;
     if (keyIdentifier == "FinalMode") return 24;
     if (keyIdentifier == "KanjiMode") return 25;
-    if (keyIdentifier == "U+001B") return 27; // Escape
-    if (keyIdentifier == "U+0020") return 32; // Space
+    // Escape
+    if (keyIdentifier == "U+001B") return 27;
+    // Space
+    if (keyIdentifier == "U+0020") return 32;
     if (keyIdentifier == "PageUp") return 33;
     if (keyIdentifier == "PageDown") return 34;
     if (keyIdentifier == "End") return 35;
@@ -232,22 +249,35 @@ UEM.keyIdentifierShiftToKeyCode =
     if (keyIdentifier == "Execute") return 43;
     if (keyIdentifier == "PrintScreen") return 44;
     if (keyIdentifier == "Insert") return 45;
-    if (keyIdentifier == "U+007F") return 46; // Delete
+    // Delete
+    if (keyIdentifier == "U+007F") return 46;
     if (keyIdentifier == "Help") return 47;
-    if (keyIdentifier == "U+0029") return 48; // Right Parenthesis
-    if (keyIdentifier == "U+0021") return 49; // Exclamation mark
-    if (keyIdentifier == "U+0040") return 50; // Commercial At
-    if (keyIdentifier == "U+0023") return 51; // Number Sign
-    if (keyIdentifier == "U+0024") return 52; // Dollar Sign
-    if (keyIdentifier == "U+0025") return 53; // Percent Sign
-    if (keyIdentifier == "U+005E") return 54; // Circumflex
-    if (keyIdentifier == "U+0026") return 55; // Ampersand
-    if (keyIdentifier == "U+002A") return 56; // Asterix
-    if (keyIdentifier == "U+0028") return 57; // Left Parenthesis
+    // Right Parenthesis
+    if (keyIdentifier == "U+0029") return 48;
+    // Exclamation mark
+    if (keyIdentifier == "U+0021") return 49;
+    // Commercial At
+    if (keyIdentifier == "U+0040") return 50;
+    // Number Sign
+    if (keyIdentifier == "U+0023") return 51;
+    // Dollar Sign
+    if (keyIdentifier == "U+0024") return 52;
+    // Percent Sign
+    if (keyIdentifier == "U+0025") return 53;
+    // Circumflex
+    if (keyIdentifier == "U+005E") return 54;
+    // Ampersand
+    if (keyIdentifier == "U+0026") return 55;
+    // Asterix
+    if (keyIdentifier == "U+002A") return 56;
+    // Left Parenthesis
+    if (keyIdentifier == "U+0028") return 57;
     if (keyIdentifier == "Win") return 91;
     if (keyIdentifier == "Apps") return 93;
-    if (keyIdentifier == "U+002D") return 109; // Minus (keypad)
-    if (keyIdentifier == "U+002F") return 111; // Slash (keypad)
+    // Minus (keypad)
+    if (keyIdentifier == "U+002D") return 109;
+    // Slash (keypad)
+    if (keyIdentifier == "U+002F") return 111;
     if (keyIdentifier == "F1") return 112;
     if (keyIdentifier == "F2") return 113;
     if (keyIdentifier == "F3") return 114;
@@ -295,14 +325,22 @@ UEM.keyIdentifierShiftToKeyCode =
     if (keyIdentifier == "U+003A") return 186; // Colon
     if (keyIdentifier == "U+002B") return 187; // Plus
     if (keyIdentifier == "U+003C") return 188; // Less Than
-    if (keyIdentifier == "U+005F") return 189; // Underscore
-    if (keyIdentifier == "U+003E") return 190; // Greater Than
-    if (keyIdentifier == "U+003F") return 191; // Question Mark
-    if (keyIdentifier == "Tilde") return 192;  // Not Unicode
-    if (keyIdentifier == "U+007B") return 219; // Left Curly Bracket
-    if (keyIdentifier == "U+007C") return 220; // Vertical Line
-    if (keyIdentifier == "U+007D") return 221; // Right Curly Bracket
-    if (keyIdentifier == "U+0022") return 222; // Quotation Mark
+    // Underscore
+    if (keyIdentifier == "U+005F") return 189;
+    // Greater Than
+    if (keyIdentifier == "U+003E") return 190;
+    // Question Mark
+    if (keyIdentifier == "U+003F") return 191;
+    // Not Unicode
+    if (keyIdentifier == "Tilde") return 192;
+    // Left Curly Bracket
+    if (keyIdentifier == "U+007B") return 219;
+    // Vertical Line
+    if (keyIdentifier == "U+007C") return 220;
+    // Right Curly Bracket
+    if (keyIdentifier == "U+007D") return 221;
+    // Quotation Mark
+    if (keyIdentifier == "U+0022") return 222;
     if (keyIdentifier == "Meta") return 224;
     return 0;
   };
@@ -311,16 +349,16 @@ UEM.getW3CKeyIdentifier =
   function(keyCode) {
     // Prefer lower case
     var keyIdentifier = UEM.keyCodeNoShiftToKeyIdentifier[keyCode];
-    // If lower case mapping is null or not Unicode, try the upper case mapping.
-    if (!keyIdentifier) {
-      keyIdentifier = UEM.keyCodeShiftToKeyIdentifier[keyCode];
-    }
-    else if (keyIdentifier.indexOf("U+") != 0) {
-      var keyIdentifierHi = UEM.keyCodeShiftToKeyIdentifier[keyCode];
-      if (keyIdentifierHi && keyIdentifierHi.indexOf("U+") == 0) {
-        keyIdentifier = keyIdentifierHi;
-      }
-    }
+//    // If lower case mapping is null or not Unicode, try the upper case mapping.
+//    if (!keyIdentifier) {
+//      keyIdentifier = UEM.keyCodeShiftToKeyIdentifier[keyCode];
+//    }
+//    else if (keyIdentifier.indexOf("U+") != 0) {
+//      var keyIdentifierHi = UEM.keyCodeShiftToKeyIdentifier[keyCode];
+//      if (keyIdentifierHi && keyIdentifierHi.indexOf("U+") == 0) {
+//        keyIdentifier = keyIdentifierHi;
+//      }
+//    }
     // If no mapping, return the Unicode sequence
     if (!keyIdentifier) {
       var hexCode = e.keyCode.toString(16);
