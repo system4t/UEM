@@ -620,7 +620,7 @@ if (document.createEventObject) {
           e.initMouseEvent(ie_event.type, bubbles, cancelable, window, detail, ie_event.screenX, ie_event.screenY, ie_event.clientX, ie_event.clientY, ie_event.ctrlKey, ie_event.altKey, ie_event.shiftKey,null, button, relatedTarget);
           break;
         case 'TextEvent':
-          var data = String.fromCharCode(ie_event.keyCode)
+          var data = String.fromCharCode(ie_event.keyCode);
           e.initTextEvent(ie_event.type, bubbles, cancelable, window, data);
           break;
         case 'KeyboardEvent':
