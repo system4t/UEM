@@ -1,6 +1,7 @@
 // KeyboardEvent for Safari
 
 if (navigator.product == "Safari" || navigator.product == "Gecko" && navigator.vendor == "Apple Computer, Inc.") {
+  UEM = {};
 /**
  * Keypress handler that adds the data property to the event.  This is a
  * capture phase and unless the developer gets creative, the first such capture
@@ -15,20 +16,27 @@ if (navigator.product == "Safari" || navigator.product == "Gecko" && navigator.v
  // The JavaScript Madness page at http://unixpapa.com/js/key.html says that
  // Safari (miraculously) gets the keyup and keydown events right.  Documentation
  // about any initialization methods is nonexistent.
-  document.addEventListener("keyup", 
-    function(e) {
-      if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
-      }
-      e.keyLocation = 0;
-    }
-    , true);
-  document.addEventListener("keydown", 
-    function(e) {
-      if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
-      }
-      e.keyLocation = 0;
-    }
-    , true);
+ // 
+ // The claim is incorrect.  The keyIdentifier assignments for punctuation
+ // [`[]\,./;'{}|:"<>?~] are not correct.  Not only are they wrong, but they
+ // cannot be overwritten with the correct assignments.
+ // 
+//  document.addEventListener("keyup", 
+//    function(e) {
+//      if (UEM.getW3CKeyIdentifier) {
+//        var keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+//        e.keyIdentifier = keyIdentifier;
+//      }
+//      e.keyLocation = 0;
+//    }
+//    , true);
+//  document.addEventListener("keydown", 
+//    function(e) {
+//      if (UEM.getW3CKeyIdentifier) {
+//        var keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+//        e.keyIdentifier = keyIdentifier;
+//      }
+//      e.keyLocation = 0;
+//    }
+//    , true);
 }
