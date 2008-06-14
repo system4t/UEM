@@ -1,6 +1,6 @@
 // KeyboardEvent for Opera
 
-if (window.opera == "Opera") {
+if (navigator.appName == "Opera") {
   
   UEM = {};
 
@@ -12,7 +12,7 @@ if (window.opera == "Opera") {
  */
   document.addEventListener("keypress", 
     function(e) {
-      if (e.charCode) e.data = String.fromCharCode(e.keyCode);
+      if (e.keyCode) e.data = String.fromCharCode(e.keyCode);
     },
     true);
   
@@ -27,7 +27,6 @@ if (window.opera == "Opera") {
     function(e) {
       e.keyLocation = 0;
       if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         // Semicolon
         if (e.keyCode == 59) e.keyIdentifier = "U+003B";
         // Equals
@@ -41,11 +40,14 @@ if (window.opera == "Opera") {
         // Slash
         else if (e.keyCode == 47) e.keyIdentifier = "U+002F";
         // Grave accent
-        else if (e.keyCode == 126) e.keyIdentifier = "U+0060";
+        else if (e.keyCode == 96) e.keyIdentifier = "U+0060";
         // Back slash
         else if (e.keyCode == 92) e.keyIdentifier = "U+005C";
         // Single quote
         else if (e.keyCode == 39) e.keyIdentifier = "U+0027";
+        else {
+          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+        }
       }
     },
     true);
@@ -53,7 +55,7 @@ if (window.opera == "Opera") {
     function(e) {
       e.keyLocation = 0;
       if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+        
         // Semicolon
         if (e.keyCode == 59) e.keyIdentifier = "U+003B";
         // Equals
@@ -67,11 +69,14 @@ if (window.opera == "Opera") {
         // Slash
         else if (e.keyCode == 47) e.keyIdentifier = "U+002F";
         // Grave accent
-        else if (e.keyCode == 126) e.keyIdentifier = "U+0060";
+        else if (e.keyCode == 96) e.keyIdentifier = "U+0060";
         // Back slash
         else if (e.keyCode == 92) e.keyIdentifier = "U+005C";
         // Single quote
         else if (e.keyCode == 39) e.keyIdentifier = "U+0027";
+        else {
+          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+        }
       }
     },
     true);
