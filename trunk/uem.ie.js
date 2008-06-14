@@ -622,6 +622,10 @@ if (document.createEventObject) {
         case 'TextEvent':
           var data = String.fromCharCode(ie_event.keyCode);
           e.initTextEvent(ie_event.type, bubbles, cancelable, window, data);
+          e.ctrlKey = ie_event.ctrlKey;
+          e.altKey = ie_event.altKey;
+          e.shiftKey = ie_event.shiftKey;
+          e.metaKey = false;
           break;
         case 'KeyboardEvent':
           // Not used at the moment
