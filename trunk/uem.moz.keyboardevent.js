@@ -39,7 +39,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     "keyup",
     function(e) {
       if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         if (e.keyCode == 59) {
           // Semicolon
           e.keyIdentifier = "U+003B";
@@ -51,6 +50,9 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
         else if (e.keyCode == 109) {
           // Minus
           e.keyIdentifier = "U+002D";
+        }
+        else {
+          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         }
       }
       e.keyLocation = 0;
@@ -62,7 +64,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     "keydown",
     function(e) {
       if (UEM.getW3CKeyIdentifier) {
-        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         if (e.keyCode == 59) {
           // Semicolon
           e.keyIdentifier = "U+003B";
@@ -74,6 +75,9 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
         else if (e.keyCode == 109) {
           // Minus
           e.keyIdentifier = "U+002D";
+        }
+        else {
+          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         }
       }
       e.keyLocation = 0;
