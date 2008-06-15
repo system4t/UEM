@@ -24,38 +24,37 @@ if (navigator.appName == "Opera") {
  * to all other keyboard event handlers in this document.
  */
   document.addEventListener("keyup", 
-    function(e) {
+  function(e) {
       e.keyLocation = 0;
-      if (UEM.getW3CKeyIdentifier) {
-        // Semicolon
-        if (e.keyCode == 59) e.keyIdentifier = "U+003B";
-        // Equals
-        else if (e.keyCode == 61) e.keyIdentifier = "U+003D";
-        // Minus
-        else if (e.keyCode == 45) e.keyIdentifier = "U+002D";
-        // Comma
-        else if (e.keyCode == 44) e.keyIdentifier = "U+002C";
-        // Period
-        else if (e.keyCode == 46) e.keyIdentifier = "U+002E";
-        // Slash
-        else if (e.keyCode == 47) e.keyIdentifier = "U+002F";
-        // Grave accent
-        else if (e.keyCode == 96) e.keyIdentifier = "U+0060";
-        // Back slash
-        else if (e.keyCode == 92) e.keyIdentifier = "U+005C";
-        // Single quote
-        else if (e.keyCode == 39) e.keyIdentifier = "U+0027";
-        else {
-          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
-        }
+      // Semicolon
+      if (e.keyCode == 59) e.keyIdentifier = "U+003B";
+      // Equals
+      else if (e.keyCode == 61) e.keyIdentifier = "U+003D";
+      // Minus
+      else if (e.keyCode == 45) e.keyIdentifier = "U+002D";
+      // Comma
+      else if (e.keyCode == 44) e.keyIdentifier = "U+002C";
+      // Period
+      else if (e.keyCode == 46) e.keyIdentifier = "U+002E";
+      // Slash
+      else if (e.keyCode == 47) e.keyIdentifier = "U+002F";
+      // Grave accent
+      else if (e.keyCode == 96) e.keyIdentifier = "U+0060";
+      // Back slash
+      else if (e.keyCode == 92) e.keyIdentifier = "U+005C";
+      // Single quote
+      else if (e.keyCode == 39) e.keyIdentifier = "U+0027";
+      else if (UEM.getW3CKeyIdentifier) {
+        e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
       }
-    },
-    true);
+      else {
+        e.keyIdentifier = "";
+      }
+  },
+  true);
   document.addEventListener("keydown",
     function(e) {
       e.keyLocation = 0;
-      if (UEM.getW3CKeyIdentifier) {
-        
         // Semicolon
         if (e.keyCode == 59) e.keyIdentifier = "U+003B";
         // Equals
@@ -74,10 +73,12 @@ if (navigator.appName == "Opera") {
         else if (e.keyCode == 92) e.keyIdentifier = "U+005C";
         // Single quote
         else if (e.keyCode == 39) e.keyIdentifier = "U+0027";
-        else {
+        else if (UEM.getW3CKeyIdentifier) {
           e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
         }
-      }
+        else {
+          e.keyIdentifer = "";
+        }
     },
     true);
  // The Opera home pages lead one to the conclusion that the best thing to do

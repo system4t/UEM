@@ -131,8 +131,12 @@ if (document.createEventObject) {
         e.altKey = this.altKey;
       }
       //this.keyCode does not exist...........Need a fix.
+      //if keyIdentifierNoShiftToKeyCode is available, then use it.
       else if (eventClass == 'KeyboardEvent') {
-        e.keyCode = UEM.keyIdentifierNoShiftToKeyCode(this.keyIdentifier);
+        if (UEM.keyIdentifierNoShiftToKeyCode)
+          e.keyCode = UEM.keyIdentifierNoShiftToKeyCode(this.keyIdentifier);
+        else
+          e.keyCode = 0;
       }
       else if (eventClass == 'TextEvent') {
         e.keyCode = this.data.charCodeAt(0);

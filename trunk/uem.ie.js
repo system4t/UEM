@@ -630,36 +630,40 @@ if (document.createEventObject) {
         case 'KeyboardEvent':
           // Not used at the moment
           var modifiersList = '';
+          var keyIdentifier = null;
           e.keyCode = ie_event.keyCode;
           if (UEM.getW3CKeyIdentifier) {
             keyIdentifier = UEM.getW3CKeyIdentifier(ie_event.keyCode);
-            var keyLocation = KeyboardEvent.DOM_KEY_LOCATION_STANDARD;
-            if (keyIdentifier == 'Control')
-              keyLocation = ie_event.ctrlLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-            else if (keyIdentifier == 'Shift') 
-              keyLocation = ie_event.shiftLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-            else if (keyIdentifier == 'Alt')
-              keyLocation = ie_event.altLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-            // Left Win
-            else if (ie_event.keyCode == 91) 
-              keyLocation = KeyboardEvent.DOM_KEY_LOCATION_LEFT;
-            // Right Win
-            else if (ie_event.keyCode == 92) 
-              keyLocation = KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
-            // Number pad
-            else if (96 <= ie_event.keyCode && ie_event.keyCode <= 105) 
-              keyLocation = KeyboardEvent.DOM_KEY_LOCATION_NUMPAD;
-            if (ie_event.ctrlKey)
-              modifiersList += " Control";
-            if (ie_event.altKey)
-              modifiersList += " Alt";
-            if (ie_event.shiftKey)
-              modifiersList += " Shift";
-            // Remove leading space
-            if (modifiersList.length > 0)
-              modifiersList = modifiersList.substring(1);
-            e.initKeyboardEvent(ie_event.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
           }
+          var keyLocation = KeyboardEvent.DOM_KEY_LOCATION_STANDARD;
+          // keyIdentifier == 'Control'
+          if (ie_event.keyCode == 17)
+            keyLocation = ie_event.ctrlLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          // keyIdentifier == 'Shift'
+          else if (ie_event.keyCode == 16) 
+            keyLocation = ie_event.shiftLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          // keyIdentifier == 'Alt'
+          else if (ie_event.keyCode == 18)
+            keyLocation = ie_event.altLeft ? KeyboardEvent.DOM_KEY_LOCATION_LEFT : KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          // Left Win
+          else if (ie_event.keyCode == 91) 
+            keyLocation = KeyboardEvent.DOM_KEY_LOCATION_LEFT;
+          // Right Win
+          else if (ie_event.keyCode == 92) 
+            keyLocation = KeyboardEvent.DOM_KEY_LOCATION_RIGHT;
+          // Number pad
+          else if (96 <= ie_event.keyCode && ie_event.keyCode <= 105) 
+            keyLocation = KeyboardEvent.DOM_KEY_LOCATION_NUMPAD;
+          if (ie_event.ctrlKey)
+            modifiersList += " Control";
+          if (ie_event.altKey)
+            modifiersList += " Alt";
+          if (ie_event.shiftKey)
+            modifiersList += " Shift";
+          // Remove leading space
+          if (modifiersList.length > 0)
+            modifiersList = modifiersList.substring(1);
+          e.initKeyboardEvent(ie_event.type, bubbles, cancelable, window, keyIdentifier, keyLocation, modifiersList);
           break;
         case 'MutationEvent':
           // Not used at the moment
@@ -670,7 +674,7 @@ if (document.createEventObject) {
           var attrName = null;
           var attrChange = null;
           e.initMutationEvent(ie_event.type, bubbles, cancelable, relatedNode, prevValue, newValue, attrName, attrChange);
-          */
+           */
           break;
         default:  
           break;

@@ -10,18 +10,18 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
    * capture phase and unless the developer gets creative, the first such capture
    * phase handler for keypress events.  This means that this handler will make
    * the data property available to all other keypress event handlers.
-  */
+   */
   document.addEventListener(
-    "keypress",
-    function(e) {
-      if (e.charCode) {
-        e.data = String.fromCharCode(e.charCode);
-      }
-      if (e.charCode == 0) {
-        e.stopPropagation();
-      }
-    },
-    true
+  "keypress",
+  function(e) {
+    if (e.charCode) {
+      e.data = String.fromCharCode(e.charCode);
+    }
+    if (e.charCode == 0) {
+      e.stopPropagation();
+    }
+  },
+  true
   );
     
   /**
@@ -30,58 +30,60 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
    * gets creative, the first such capture phase handler for keyboard events.
    * This means that this handler will make the keyIdentifier property available
    * to all other keyboard event handlers in this document.
-  */
+   */
   
   // Now declaring the same function twise in order to avoid declaring in global namespace
   // Although redundant it doesn't really matter as this code is only executed once when
   // the document loads
   document.addEventListener(
-    "keyup",
-    function(e) {
-      if (UEM.getW3CKeyIdentifier) {
-        if (e.keyCode == 59) {
-          // Semicolon
-          e.keyIdentifier = "U+003B";
-        }
-        else if (e.keyCode == 61) {
-          // Equals
-          e.keyIdentifier = "U+003D";
-        }
-        else if (e.keyCode == 109) {
-          // Minus
-          e.keyIdentifier = "U+002D";
-        }
-        else {
-          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
-        }
-      }
-      e.keyLocation = 0;
-    },
-    true
+  "keyup",
+  function(e) {
+    if (e.keyCode == 59) {
+      // Semicolon
+      e.keyIdentifier = "U+003B";
+    }
+    else if (e.keyCode == 61) {
+      // Equals
+      e.keyIdentifier = "U+003D";
+    }
+    else if (e.keyCode == 109) {
+      // Minus
+      e.keyIdentifier = "U+002D";
+    }
+    else if (UEM.getW3CKeyIdentifier) {
+      e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+    }
+    else {
+      e.keyIdentifier = "";
+    }
+    e.keyLocation = 0;
+  },
+  true
   );
   
   document.addEventListener(
-    "keydown",
-    function(e) {
-      if (UEM.getW3CKeyIdentifier) {
-        if (e.keyCode == 59) {
-          // Semicolon
-          e.keyIdentifier = "U+003B";
-        }
-        else if (e.keyCode == 61) {
-          // Equals
-          e.keyIdentifier = "U+003D";
-        }
-        else if (e.keyCode == 109) {
-          // Minus
-          e.keyIdentifier = "U+002D";
-        }
-        else {
-          e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
-        }
-      }
-      e.keyLocation = 0;
-    },
+  "keydown",
+  function(e) {
+    if (e.keyCode == 59) {
+      // Semicolon
+      e.keyIdentifier = "U+003B";
+    }
+    else if (e.keyCode == 61) {
+      // Equals
+      e.keyIdentifier = "U+003D";
+    }
+    else if (e.keyCode == 109) {
+      // Minus
+      e.keyIdentifier = "U+002D";
+    }
+    else if (UEM.getW3CKeyIdentifier) {
+      e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
+    }
+    else {
+      e.keyIdentifier = "";
+    }
+    e.keyLocation = 0;
+  },
     true
   );
   function TextEvent() {
@@ -97,7 +99,7 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
    * @param cancelable Boolean that determines if the event can be cancelled.
    * @param view Reference to the view (window).
    * @param data A string.
-  */
+   */
   TextEvent.prototype.initTextEvent =
     function(type, canBubble, cancelable, view, data) {
     var charCode = data.charCodeAt(0);
@@ -110,10 +112,10 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
       data == "+" || data == ":" || data == "_");
     
     this.initKeyEvent(type,canBubble, cancelable, view,
-      false,
-      false,
-      iShift,
-      false, keyCode, charCode);
+    false,
+    false,
+    iShift,
+    false, keyCode, charCode);
   };
     
     /**
@@ -132,9 +134,9 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
       function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
       var ishift = modifierList.contains(/Shift/);
       var keyCode;
-      if (ishift)
+      if (ishift && UEM.keyIdentifierShiftToKeyCode)
         keyCode = UEM.keyIdentifierShiftToKeyCode(keyIdentifier); 
-      else
+      else if (!ishift && UEM.keyIdentifierNoShiftToKeyCode)
         keyCode = UEM.keyIdentifierNoShiftToKeyCode(keyIdentifier);
       // semicolon or colon
       if (keyIdentifier == "U+003B" || keyIdentifier == "U+003A")
@@ -149,10 +151,10 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
       this.keyIdentifier = keyIdentifier;
       this.keyLocation = keyLocation;
       this.initKeyEvent(type,canBubble, cancelable, view,
-        modifierList.contains(/Control/),
-        modifierList.contains(/Alt/), 
-        ishift,
-        false, keyCode, charCode);
+      modifierList.contains(/Control/),
+      modifierList.contains(/Alt/), 
+      ishift,
+      false, keyCode, charCode);
     };
 
-}
+  }
