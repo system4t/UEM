@@ -197,14 +197,12 @@ if (document.createEventObject) {
    */
     // Define createEvent
   document.createEvent =
-    function(eventClassArg, e) {
+    function(eventClass, e) {
       // We are holding back on MutationEvent and KeyboardEvent
-      if (eventClassArg == 'Events' || eventClassArg == 'HTMLEvents' || eventClassArg == 'UIEvents' || eventClassArg == 'TextEvents' || eventClassArg == 'MouseEvents' || eventClassArg == 'KeyboardEvents' || eventClassArg == 'MutationEvents') {
+      if (eventClass == 'Event' || eventClass == 'HTMLEvent' || eventClass == 'UIEvent' || eventClass == 'TextEvent' || eventClass == 'MouseEvent' || eventClass == 'KeyboardEvent' || eventClass == 'MutationEvent') {
         // Map HTMLEvents to Event.
-        var eventClass = null;
-        if (eventClassArg == 'HTMLEvents') eventClass = 'Event';
-        // remove the terminal 's'
-        else eventClass = eventClassArg.substring(0,eventClassArg.length-1);
+        if (eventClass == 'HTMLEvent')
+          eventClass = 'Event';
         return new window[eventClass](e);
       }
       else
