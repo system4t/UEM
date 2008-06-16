@@ -100,7 +100,10 @@ if (document.createEventObject) {
    * MSDN reference: http://msdn.microsoft.com/en-us/library/ms535863(VS.85).aspx      
    * @returns An actual IE event object
    * @type IE Event object
-   */   
+   * 
+   * EXPERIMENTAL: This function is no longer needed. See notes for UEM.dispatch and UEM.wrapper      
+   */
+  /*
   Event.prototype.toIE =
     function() {
       var e = document.createEventObject();
@@ -111,14 +114,17 @@ if (document.createEventObject) {
       // We need to save whether to cancel or not
       e.cancelable = this.cancelable;
       e.srcElement = this.target; 
-      if (eventClass == 'Event') return;
+      if (eventClass == 'Event')
+        return;
       if (eventClass == 'MouseEvent') {
         // Needs tranlating back to IE
         e.button = UEM.getIEbutton(this.button);
         e.clientX = this.clientX; 
         e.clientY = this.clientY; 
-        if (e.type == 'mouseover') e.fromElement = this.relatedTarget;
-        if (e.type == 'mouseout') e.toElement = this.relatedTarget;
+        if (e.type == 'mouseover')
+          e.fromElement = this.relatedTarget;
+        if (e.type == 'mouseout')
+          e.toElement = this.relatedTarget;
         e.screenX = this.screenX;
         e.screenY = this.screenY;
         e.shiftKey = this.shiftKey;
@@ -143,6 +149,8 @@ if (document.createEventObject) {
       }
       return e;  
     };
+  */
+    
   /**
    * Execute functions in propagation chain.  The 'this' keyword for
    * 'propagate' is a reference to the event object.
