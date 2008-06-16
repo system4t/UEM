@@ -51,7 +51,7 @@ if (document.createEventObject) {
   // element.addEventListener turn this feature off
   // for increased performance.
   // Default value is 1. Set to 0 to turn off
-  UEM.WATCH_PROPERTIES = 1;
+  UEM.WATCH_PROPERTIES = 0;
 
   // THERE ARE NO CONFIGURABLE SETTINGS BELOW THIS LINE
 
@@ -86,6 +86,7 @@ if (document.createEventObject) {
   UEM.addEventListener = 
     function(type, fnc, useCapture) {
       // If event target is window
+      /**  UEM CAN'T HANDLE WINDOW AS EVENT TARGET  **/
       if (this == window)
         alert('adasd');
       // Translate to W3C type
@@ -238,17 +239,24 @@ if (document.createEventObject) {
    * @param e The event to dispatch.
    * @return true if the event was successfully dispatched and false if the
    * event was cancelled.
+   * 
+   * EXPERIMENTAL: Currently we avoid to use native IE event object and fireEvent
+   *               method when dispatching. See also notes in UEM.wrapper.         
    */
   UEM.dispatchEvent =
     function(e) {
+      // EXPERIMENTAL
+      UEM.wrapper.call(this, e);
+      /*
       // Translate W3C event object to IE event object
       var ie_event = e.toIE();
       // Argument e is an actual IE event object (ie. window.event)
-      this.fireEvent('on'+ie_event.type, ie_event);
+      this.fireEvent('on' + ie_event.type, ie_event);
       // Even though UEM.prototype.preventDefault will set
       // the returnValue to false fireEvent still returns true
       // Check for return value
       return e.returnValue === false ? false : true;
+      */
     };
     
   /***********************************************
@@ -405,19 +413,26 @@ if (document.createEventObject) {
    * for this call to addEventListener.  During propagation, the 'this'
    * keyword refers to the same element as the currentTarget property of the
    * event object.
+   * 
+   * EXPERIMENTAL: If argument e is supplied UEM.wrapper was called from UEM.dispatch.
+   *               This is a cleaner way of dispatching as IE behaves weird with UEM +
+   *               natie fireEvent method,            
    */
   UEM.wrapper =
-    function() {
-      // Cancel bubbling - UEM takes care of this
-      window.event.cancelBubble = true;
-      // Create a proper W3C event object
-      var e = UEM.createEventObject(window.event);
+    function(e) {
+      // If e is not supplied this is a dispatched event
+      if (!e) {
+        // Cancel bubbling - UEM takes care of this
+        window.event.cancelBubble = true;
+        // Create a proper W3C event object
+        var e = UEM.createEventObject(window.event);
+      }
       // Shortcut - the type of event. 'UEM' string added to minimize chance of property already existing.
-      var eType = 'UEM'+e.type;
+      var eType = 'UEM' + e.type;
       // Temp. array for event functions higher up in the DOM structure - capture phase
-      var aCap = new Array();
+      var aCap = [];
       // Temp. array for event functions higher up in the DOM structure - bubbling phase
-      var aBub = new Array();
+      var aBub = [];
       var n = this;
       // Add all parent nodes which have an event function for this event type
       while((n = n.parentNode) != null) {
