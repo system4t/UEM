@@ -463,19 +463,23 @@ if (document.createEventObject) {
         var l = this[eType].length;
         for (var i2=0; i2<this[eType].length; i2++) {
           e.currentTarget = this;
-          // Execute event handler
-          this[eType][i2].fnc.call(this,e);
-          // Check whether stopPropagation() has been called
-          if (e.propagationStopped)
-            return false;
-          // It is possible that this['UEM'+e.type] has now been modified
-          // If this['UEM'+e.type] does not exist anymore just break
-          if (!this[eType])
-            break;
-          // If the length of the array has been shortened
-          else if (l > this[eType].length) {
-            l = this[eType].length;
-            i2--;
+          // Do not trigger a capture phase handler for this element for an event
+          // dispatched directly to this element.
+          if (!this[eType][i2].useCapture) {
+            // Execute event handler
+            this[eType][i2].fnc.call(this,e);
+            // Check whether stopPropagation() has been called
+            if (e.propagationStopped)
+              return false;
+            // It is possible that this['UEM'+e.type] has now been modified
+            // If this['UEM'+e.type] does not exist anymore just break
+            if (!this[eType])
+              break;
+            // If the length of the array has been shortened
+            else if (l > this[eType].length) {
+              l = this[eType].length;
+              i2--;
+            }
           }
         }
       }
