@@ -145,6 +145,7 @@ if (document.createEventObject) {
    */
   UEM.removeEventListener =
     function(type, fnc, useCapture) {
+      //alert(arguments.callee.caller);
       type = UEM.getEventType(type);
       // Don't monitor changes in elements properties while removing event handlers
       // This can lead to all kind of unsuspected behaviors
@@ -831,6 +832,12 @@ if (document.createEventObject) {
         eventClass: 'Event'
       },
     click:
+      {
+        cancels: true,
+        bubbles: true,
+        eventClass: 'MouseEvent'
+      },
+    contextmenu:
       {
         cancels: true,
         bubbles: true,
