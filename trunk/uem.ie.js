@@ -326,7 +326,7 @@ if (document.createEventObject) {
   // http://www.w3.org/TR/1999/REC-html401-19991224/sgml/dtd.html
   UEM.elementEventTypes =
     {
-      allTags: ['activate', 'click', 'dblclick', 'focusin', 'focusout', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'],
+      allTags: ['activate', 'click', 'dblclick', 'focusin', 'focusout', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mousewheel', 'mouseup'],
       a: ['blur','focus'],
       body: ['load','unload'],
       button: ['blur','focus'],
@@ -376,7 +376,9 @@ if (document.createEventObject) {
     {
       DOMActivate: 'activate',
       DOMFocusIn: 'focusin',
-      DOMFocusOut: 'focusout'
+      DOMFocusOut: 'focusout',
+      // Don't know wheter this is W3C but Firefox is using DOMMouseScroll
+      DOMMouseScroll: 'mousewheel'
     };
   
   /**
@@ -626,7 +628,11 @@ if (document.createEventObject) {
           if (ie_event.type == 'dblclick')
             detail = 2;
           else if (ie_event.type == 'click' || ie_event.type == 'mouseup' || ie_event.type == 'mousedown')
-            detail = 1; 
+            detail = 1;
+          // wheel moves in multiplum of 120 and direction is reversed -> so multiply by -1 and divide by 40
+          // to get Firefox equivalent
+          else if (ie_event.type == 'mousewheel')
+            detail = -1 * ie_event.wheelDelta / 40;
           // Translate button number from IE to W3C
           var button = UEM.getButton(ie_event.button);
           // Element which is related to the element firing the event
@@ -918,6 +924,12 @@ if (document.createEventObject) {
         eventClass: 'MouseEvent'
       },
     mouseout:
+      {
+        cancels: true,
+        bubbles: true,
+        eventClass: 'MouseEvent'
+      },
+    mousewheel:
       {
         cancels: true,
         bubbles: true,
