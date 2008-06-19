@@ -176,10 +176,7 @@ if (document.createEventObject) {
           var l = chain[i][eType].length;
           // Execute event handlers registered with this useCapture (either true or false)
           for (var j=0; j<l; j++) {
-            // Original IF statement
             if (chain[i][eType][j].useCapture === useCapture) {
-            // New IF statement with fix
-            //if (chain[i][eType] && chain[i][eType][j] && chain[i][eType][j].useCapture === useCapture) {
               // Update currentTarget to element whose event handlers are currently being processed
               this.currentTarget = chain[i];
               // Event handler may remove itself. Save length
