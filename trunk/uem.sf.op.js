@@ -48,7 +48,7 @@ if (!window.MouseEvent) {
   UEM.initEvent =
     function() {
       var a = arguments;
-      a[0] = UEM.eventTable[a[0]] ? UEM.eventTable[a[0]] : a[0];
+      a[0] = UEM.eventTableReverse[a[0]] ? UEM.eventTableReverse[a[0]] : a[0];
       // type,canBubble,cancelable
       this._initMouseEvent(a[0],a[1],a[2]);
     };
@@ -57,7 +57,7 @@ if (!window.MouseEvent) {
   UEM.initUIEvent =
     function() {
       var a = arguments;
-      a[0] = UEM.eventTable[a[0]] ? UEM.eventTable[a[0]] : a[0];
+      a[0] = UEM.eventTableReverse[a[0]] ? UEM.eventTableReverse[a[0]] : a[0];
       // type,canBubble,cancelable,view,detail
       this._initMouseEvent(a[0],a[1],a[2],a[3],a[4]);
     };
@@ -74,7 +74,7 @@ if (!window.MouseEvent) {
   UEM.eventTable =
     {
       DOMMouseScroll:'mousewheel'
-    }
+    };
   
   // Fix window
   window._addEventListener = window.addEventListener;
