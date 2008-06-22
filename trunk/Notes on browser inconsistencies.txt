@@ -1,0 +1,19 @@
+Notes on browser inconsistencies
+
+IE
+--
+
+FF
+--
+
+OP
+--
+Does not expose UIEvent, MouseEvent (and probably others) until and event object is created
+
+SF/Win
+------
+Uses e.bubbles instead of e.canBubble
+Uses e.wheelDelta instead of e.detail - CORRECTED 
+
+SF/Mac
+------
