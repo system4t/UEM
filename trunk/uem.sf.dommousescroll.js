@@ -10,7 +10,8 @@ if (/safari/i.test(navigator.userAgent)) {
       var detail = e.wheelDelta / 40 * -1;
       // Create new event
       var evt = document.createEvent('MouseEvent');
-      evt.initMouseEvent('DOMMouseScroll',e.canBubble,e.cancelable,e.view,detail,e.screenX,e.screenY,e.clientX,e.clientY,e.ctrlKey,e.altKey,e.shiftKey,e.metaKey,e.button,e.relatedTarget);
+      // Apparently Safari/Win uses e.bubbles (like IE) instead of e.canBubble
+      evt.initMouseEvent('DOMMouseScroll',e.bubbles,e.cancelable,e.view,detail,e.screenX,e.screenY,e.clientX,e.clientY,e.ctrlKey,e.altKey,e.shiftKey,e.metaKey,e.button,e.relatedTarget);
       // If target is a textnode use parentnode as target
       var target = e.target.nodeType == 3 ? e.target.parentNode : e.target;
       // Remove this handler to avoid endless recursion
