@@ -9,10 +9,13 @@ FF
 OP
 --
 Does not expose UIEvent, MouseEvent (and probably others) until and event object is created
+Does not support DOMMouseScroll event - CORRECTED
 
 SF/Win
 ------
+Does not expose UIEvent, MouseEvent (and probably others) until and event object is created
 Uses e.bubbles instead of e.canBubble
+Does not support DOMMouseScroll event - CORRECTED
 Uses e.wheelDelta instead of e.detail - CORRECTED 
 
 SF/Mac
