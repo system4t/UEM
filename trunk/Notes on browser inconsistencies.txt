@@ -2,6 +2,8 @@ Notes on browser inconsistencies
 
 IE
 --
+onchange on input elements of type 'checkbox' and 'radio' is not triggered from label elements
+and are executed incorrectly.
 
 FF
 --
