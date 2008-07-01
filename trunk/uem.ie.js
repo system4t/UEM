@@ -52,7 +52,14 @@ if (document.createEventObject) {
   // for increased performance.
   // Default value is 1. Set to 0 to turn off
   UEM.WATCH_PROPERTIES = 0;
-
+  
+  // Execute event listeners for the target in the
+  // capture phase. This behavior is also implemented
+  // in Firex, Opera and Safari although the W3C standard
+  // says the opposite.
+  // Default value is 1. Set to 0 to turn off
+  UEM.CAPTURE_ON_TARGET = 1;
+  
   // THERE ARE NO CONFIGURABLE SETTINGS BELOW THIS LINE
 
   /***********************************************
@@ -247,6 +254,7 @@ if (document.createEventObject) {
   UEM.dispatchEvent =
     function(e) {
       // EXPERIMENTAL
+      e.target = this;
       UEM.wrapper.call(this, e);
       /*
       // Translate W3C event object to IE event object
@@ -423,7 +431,7 @@ if (document.createEventObject) {
    */
   UEM.wrapper =
     function(e) {
-      // If e is not supplied this is a dispatched event
+      // If e is supplied this is event is dispatched by the user
       if (!e) {
         // Cancel bubbling - UEM takes care of this
         window.event.cancelBubble = true;
@@ -467,8 +475,8 @@ if (document.createEventObject) {
         for (var i2=0; i2<this[eType].length; i2++) {
           e.currentTarget = this;
           // Do not trigger a capture phase handler for this element for an event
-          // dispatched directly to this element.
-          if (!this[eType][i2].useCapture) {
+          // dispatched directly to this element unless this option is enabled by user
+          if (!this[eType][i2].useCapture || UEM.CAPTURE_ON_TARGET) {
             // Execute event handler
             this[eType][i2].fnc.call(this,e);
             // Check whether stopPropagation() has been called
