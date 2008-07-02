@@ -55,7 +55,7 @@ if (document.createEventObject) {
   
   // Execute event listeners for the target in the
   // capture phase. This behavior is also implemented
-  // in Firex, Opera and Safari although the W3C standard
+  // in Firefox, Opera and Safari although the W3C standard
   // says the opposite.
   // Default value is 1. Set to 0 to turn off
   UEM.CAPTURE_ON_TARGET = 1;
@@ -93,9 +93,8 @@ if (document.createEventObject) {
   UEM.addEventListener = 
     function(type, fnc, useCapture) {
       // If event target is window
-      /**  UEM CAN'T HANDLE WINDOW AS EVENT TARGET  **/
       if (this == window)
-        alert('adasd');
+        throw new Error('UEM: window not supported yet');
       // Translate to W3C type
       type = UEM.getEventType(type);
       // Don't monitor changes in elements properties while assigning new event handler
@@ -152,7 +151,6 @@ if (document.createEventObject) {
    */
   UEM.removeEventListener =
     function(type, fnc, useCapture) {
-      //alert(arguments.callee.caller);
       type = UEM.getEventType(type);
       // Don't monitor changes in elements properties while removing event handlers
       // This can lead to all kind of unsuspected behaviors
@@ -218,22 +216,6 @@ if (document.createEventObject) {
         throw new Error('UEM: Event class not supported.');
     };
 
-  /* Old function
-  UEM.createEvent =
-    function(type) {
-      type = UEM.getEventType(type);
-      // Create an actual IE event object
-      var e = document.createEventObject();
-      // The type of event - either MouseEvent of UIEvent
-      e.infType = type;
-      // Functions for initializing the event
-      e.initEvent = UEM.Event.prototype.initEvent;
-      e.initUIEvent = UEM.Event.prototype.initUIEvent;
-      e.initMouseEvent = UEM.Event.prototype.initMouseEvent;
-      return e;
-    };
-   */
-  
   /**
    * Dispatch an event into any element.  This method belongs to HTML elements which
    * supply values for it's this keyword.
@@ -248,24 +230,14 @@ if (document.createEventObject) {
    * @return true if the event was successfully dispatched and false if the
    * event was cancelled.
    * 
-   * EXPERIMENTAL: Currently we avoid to use native IE event object and fireEvent
-   *               method when dispatching. See also notes in UEM.wrapper.         
+   * Currently we avoid to use native IE event object and fireEvent method when dispatching.
+   * See also notes in UEM.wrapper.         
    */
   UEM.dispatchEvent =
     function(e) {
-      // EXPERIMENTAL
+      // When dispatch by the user the target is not set before now
       e.target = this;
       UEM.wrapper.call(this, e);
-      /*
-      // Translate W3C event object to IE event object
-      var ie_event = e.toIE();
-      // Argument e is an actual IE event object (ie. window.event)
-      this.fireEvent('on' + ie_event.type, ie_event);
-      // Even though UEM.prototype.preventDefault will set
-      // the returnValue to false fireEvent still returns true
-      // Check for return value
-      return e.returnValue === false ? false : true;
-      */
     };
     
   /***********************************************
@@ -450,6 +422,10 @@ if (document.createEventObject) {
         if (n[eType])
           aCap.push(n);
       }
+      // Insert document in propagation chain ONLY if target is document and
+      // type of handler exist for document
+      if (this == document && document[eType])
+        aCap.push(document);
       // Reverse capture array to simulate capture phase
       aCap.reverse();
       // For all elements in capture chain. Return false if propagation was stopped
@@ -472,24 +448,29 @@ if (document.createEventObject) {
         //
         // Save original length
         var l = this[eType].length;
-        for (var i2=0; i2<this[eType].length; i2++) {
+        for (var i=0; i<this[eType].length; i++) {
           e.currentTarget = this;
-          // Do not trigger a capture phase handler for this element for an event
-          // dispatched directly to this element unless this option is enabled by user
-          if (!this[eType][i2].useCapture || UEM.CAPTURE_ON_TARGET) {
-            // Execute event handler
-            this[eType][i2].fnc.call(this,e);
-            // Check whether stopPropagation() has been called
-            if (e.propagationStopped)
-              return false;
-            // It is possible that this['UEM'+e.type] has now been modified
-            // If this['UEM'+e.type] does not exist anymore just break
-            if (!this[eType])
-              break;
-            // If the length of the array has been shortened
-            else if (l > this[eType].length) {
-              l = this[eType].length;
-              i2--;
+          // Apperently you can never have an event listener execute in the target phase
+          // for the document object - at least not in Firefox, Opera and Safari so we also
+          // avoid it
+          if (this != document) {
+            // Do not trigger a capture phase handler for this element for an event
+            // dispatched directly to this element unless this option is enabled by user
+            if (!this[eType][i].useCapture || UEM.CAPTURE_ON_TARGET) {
+              // Execute event handler
+              this[eType][i].fnc.call(this,e);
+              // Check whether stopPropagation() has been called
+              if (e.propagationStopped)
+                return false;
+              // It is possible that this['UEM'+e.type] has now been modified
+              // If this['UEM'+e.type] does not exist anymore just break
+              if (!this[eType])
+                break;
+              // If the length of the array has been shortened
+              else if (l > this[eType].length) {
+                l = this[eType].length;
+                i--;
+              }
             }
           }
         }
@@ -504,6 +485,10 @@ if (document.createEventObject) {
           if (n[eType])
             aBub.push(n);
         }
+        // Insert document in propagation chain ONLY if target is document and
+        // type of handler exist for document
+        if (this == document && document[eType])
+          aBub.push(document);
         // Event phase changes to BUBBLING_PHASE
         e.eventPhase = Event.BUBBLING_PHASE;
         // For all elements in bubbling chain. Return false if propagation was stopped
