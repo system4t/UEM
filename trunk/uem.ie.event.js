@@ -95,63 +95,6 @@ if (document.createEventObject) {
     };
 
   /**
-   * Translate a W3C event object to an IE event object
-   * The properties are set according to this
-   * MSDN reference: http://msdn.microsoft.com/en-us/library/ms535863(VS.85).aspx      
-   * @returns An actual IE event object
-   * @type IE Event object
-   * 
-   * EXPERIMENTAL: This function is no longer needed. See notes for UEM.dispatch and UEM.wrapper      
-   */
-  /*
-  Event.prototype.toIE =
-    function() {
-      var e = document.createEventObject();
-      e.type = this.type;
-      var eventClass = UEM.eventTable[e.type];
-      // Reverse this.bubbles  
-      e.cancelBubble = !this.bubbles;
-      // We need to save whether to cancel or not
-      e.cancelable = this.cancelable;
-      e.srcElement = this.target; 
-      if (eventClass == 'Event')
-        return;
-      if (eventClass == 'MouseEvent') {
-        // Needs tranlating back to IE
-        e.button = UEM.getIEbutton(this.button);
-        e.clientX = this.clientX; 
-        e.clientY = this.clientY; 
-        if (e.type == 'mouseover')
-          e.fromElement = this.relatedTarget;
-        if (e.type == 'mouseout')
-          e.toElement = this.relatedTarget;
-        e.screenX = this.screenX;
-        e.screenY = this.screenY;
-        e.shiftKey = this.shiftKey;
-        e.ctrlKey = this.ctrlKey;
-        e.altKey = this.altKey;
-      }
-      else if (eventClass == 'KeyboardEvent') {
-        e.shiftKey = this.shiftKey;
-        e.ctrlKey = this.ctrlKey;
-        e.altKey = this.altKey;
-      }
-      //this.keyCode does not exist...........Need a fix.
-      //if keyIdentifierNoShiftToKeyCode is available, then use it.
-      else if (eventClass == 'KeyboardEvent') {
-        if (UEM.keyIdentifierNoShiftToKeyCode)
-          e.keyCode = UEM.keyIdentifierNoShiftToKeyCode(this.keyIdentifier);
-        else
-          e.keyCode = 0;
-      }
-      else if (eventClass == 'TextEvent') {
-        e.keyCode = this.data.charCodeAt(0);
-      }
-      return e;  
-    };
-  */
-    
-  /**
    * Execute functions in propagation chain.  The 'this' keyword for
    * 'propagate' is a reference to the event object.
    * 
@@ -181,7 +124,7 @@ if (document.createEventObject) {
               this.currentTarget = chain[i];
               // Event handler may remove itself. Save length
               var l2 = l;
-              chain[i][eType][j].fnc.call(chain[i],this); // Line of Error as j doesn't exist
+              chain[i][eType][j].fnc.call(chain[i],this);
               // Check whether stopPropagation has been called
               if (this.propagationStopped)
                 return false;
