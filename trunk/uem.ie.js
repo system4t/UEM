@@ -51,7 +51,7 @@ if (document.createEventObject) {
   // element.addEventListener turn this feature off
   // for increased performance.
   // Default value is 1. Set to 0 to turn off
-  UEM.WATCH_PROPERTIES = 0;
+  UEM.WATCH_PROPERTIES = 1;
   
   // Execute event listeners for the target in the
   // capture phase. This behavior is also implemented
