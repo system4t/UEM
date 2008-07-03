@@ -90,11 +90,23 @@ if (document.createEventObject) {
    *     If false, the handler is available for invocation during the target
    *     and bubble phases.
    */
+  UEM.ADD_TO_WINDOW = false; 
   UEM.addEventListener = 
     function(type, fnc, useCapture) {
-      // If event target is window
-      if (this == window)
-        throw new Error('UEM: window not supported yet');
+      // For unknown reasons 'this' is not equal to window if a function
+      // which is defined on an object is called as a method on window
+      // Using call solves it.
+      if (this.self && !UEM.ADD_TO_WINDOW) {
+        // onload events *must* be assigned using attachEvent
+        if (type == 'load')
+          window.attachEvent('onload',function(){var e = UEM.createEventObject(window.event); fnc(e);});
+        else {
+          UEM.ADD_TO_WINDOW = true
+          arguments.callee.call(window, type, fnc, useCapture);
+          UEM.ADD_TO_WINDOW = false;
+        }
+        return;
+      }
       // Translate to W3C type
       type = UEM.getEventType(type);
       // Don't monitor changes in elements properties while assigning new event handler
@@ -426,6 +438,8 @@ if (document.createEventObject) {
       // type of handler exist for document
       if (this == document && document[eType])
         aCap.push(document);
+      if (this == window && window[eType])
+        aCap.push(window);
       // Reverse capture array to simulate capture phase
       aCap.reverse();
       // For all elements in capture chain. Return false if propagation was stopped
@@ -489,6 +503,8 @@ if (document.createEventObject) {
         // type of handler exist for document
         if (this == document && document[eType])
           aBub.push(document);
+        if (this == window && window[eType])
+          aBub.push(window);
         // Event phase changes to BUBBLING_PHASE
         e.eventPhase = Event.BUBBLING_PHASE;
         // For all elements in bubbling chain. Return false if propagation was stopped
@@ -511,6 +527,7 @@ if (document.createEventObject) {
   window.removeEventListener = UEM.removeEventListener;
   window.dispatchEvent = UEM.dispatchEvent
   window.removeAllEventListeners = UEM.removeAllEventListeners;
+
   
   // Define Event interface for document
   document.addEventListener = UEM.addEventListener;
