@@ -666,8 +666,8 @@ if (document.createEventObject) {
           var modifiersList = '';
           var keyIdentifier = null;
           e.keyCode = ie_event.keyCode;
-          if (UEM.getW3CKeyIdentifier) {
-            keyIdentifier = UEM.getW3CKeyIdentifier(ie_event.keyCode);
+          if (UEMKB.kctoi) {
+            keyIdentifier = UEMKB.kctoi(ie_event.keyCode);
           }
           var keyLocation = KeyboardEvent.DOM_KEY_LOCATION_STANDARD;
           // keyIdentifier == 'Control'
@@ -776,11 +776,11 @@ if (document.createEventObject) {
   UEM.getButton =
     function(i) {
       switch(i) {
-        // Left button
         case 1:
+          // Left button
           return 0;
-        // Middle button
         case 4:
+          // Middle button
           return 1;
         default:
           return i;

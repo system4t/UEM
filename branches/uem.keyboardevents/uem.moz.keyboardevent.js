@@ -38,7 +38,10 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   document.addEventListener(
   "keyup",
   function(e) {
-    if (e.keyCode == 59) {
+    if (UEMKB.kctoi) {
+      e.keyIdentifier = UEMKB.kctoi(e.keyCode);
+    }
+    else if (e.keyCode == 59) {
       // Semicolon
       e.keyIdentifier = "U+003B";
     }
@@ -49,9 +52,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     else if (e.keyCode == 109) {
       // Minus
       e.keyIdentifier = "U+002D";
-    }
-    else if (UEM.getW3CKeyIdentifier) {
-      e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
     }
     else {
       e.keyIdentifier = "";
@@ -64,7 +64,10 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
   document.addEventListener(
   "keydown",
   function(e) {
-    if (e.keyCode == 59) {
+    if (UEMKB.kctoi) {
+      e.keyIdentifier = UEMKB.kctoi(e.keyCode);
+    }
+    else if (e.keyCode == 59) {
       // Semicolon
       e.keyIdentifier = "U+003B";
     }
@@ -75,9 +78,6 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     else if (e.keyCode == 109) {
       // Minus
       e.keyIdentifier = "U+002D";
-    }
-    else if (UEM.getW3CKeyIdentifier) {
-      e.keyIdentifier = UEM.getW3CKeyIdentifier(e.keyCode);
     }
     else {
       e.keyIdentifier = "";
@@ -118,43 +118,41 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     false, keyCode, charCode);
   };
     
-    /**
-     * Initialize a KeyboardEvent.   Keyword 'this' is a window.event object.
-     * 
-     * @param type {String} Event type.
-     * @param canBubble Boolean that determines if the event propagates.
-     * @param cancelable Boolean that determines if the event can be cancelled.
-     * @param view Reference to the view (window).
-     * @param keyIdentifier Key identifier.
-     * @param keyLocation Key location. 0 for standard, 1 for left, 2 for right,
-     *    and 3 for numpad.
-     * @param modifierList String containing "Alt", "Control", "Meta", and/or "Shift".
-     */
-    TextEvent.prototype.initKeyboardEvent =
-      function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
-      var ishift = modifierList.contains(/Shift/);
-      var keyCode;
-      if (ishift && UEM.keyIdentifierShiftToKeyCode)
-        keyCode = UEM.keyIdentifierShiftToKeyCode(keyIdentifier); 
-      else if (!ishift && UEM.keyIdentifierNoShiftToKeyCode)
-        keyCode = UEM.keyIdentifierNoShiftToKeyCode(keyIdentifier);
-      // semicolon or colon
-      if (keyIdentifier == "U+003B" || keyIdentifier == "U+003A")
-        keyCode = 59;
-      // equals or plus
-      else if (keyIdentifier == "U+003D" || keyIdentifier == "U+002B")
-        keyCode = 61;
-      // minus or underscore
-      else if (keyIdentifier == "U+002D" || keyIdentifier == "U+005F")
-        keyCode = 109;
-      var charCode = 0;
-      this.keyIdentifier = keyIdentifier;
-      this.keyLocation = keyLocation;
-      this.initKeyEvent(type,canBubble, cancelable, view,
-      modifierList.contains(/Control/),
-      modifierList.contains(/Alt/), 
-      ishift,
-      false, keyCode, charCode);
-    };
+  /**
+   * Initialize a KeyboardEvent.   Keyword 'this' is a window.event object.
+   * 
+   * @param type {String} Event type.
+   * @param canBubble Boolean that determines if the event propagates.
+   * @param cancelable Boolean that determines if the event can be cancelled.
+   * @param view Reference to the view (window).
+   * @param keyIdentifier Key identifier.
+   * @param keyLocation Key location. 0 for standard, 1 for left, 2 for right,
+   *    and 3 for numpad.
+   * @param modifierList String containing "Alt", "Control", "Meta", and/or "Shift".
+   */
+  TextEvent.prototype.initKeyboardEvent =
+    function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
+    var ishift = modifierList.contains(/Shift/);
+    var keyCode;
+    if (UEMKB.itokc)
+      keyCode = UEMKB.itokc(keyIdentifier); 
+    // semicolon or colon
+    else if (keyIdentifier == "U+003B" || keyIdentifier == "U+003A")
+      keyCode = 59;
+    // equals or plus
+    else if (keyIdentifier == "U+003D" || keyIdentifier == "U+002B")
+      keyCode = 61;
+    // minus or underscore
+    else if (keyIdentifier == "U+002D" || keyIdentifier == "U+005F")
+      keyCode = 109;
+    var charCode = 0;
+    this.keyIdentifier = keyIdentifier;
+    this.keyLocation = keyLocation;
+    this.initKeyEvent(type,canBubble, cancelable, view,
+    modifierList.contains(/Control/),
+    modifierList.contains(/Alt/), 
+    ishift,
+    false, keyCode, charCode);
+  };
 
-  }
+}
