@@ -3,6 +3,8 @@
 if (navigator.appName == "Opera") {
   
   UEM = {};
+  UEMKB = {};
+  UEMKB.ix = {};
 
 /**
  * Keypress handler that adds the data property to the event.  This is a
@@ -27,7 +29,7 @@ if (navigator.appName == "Opera") {
   function(e) {
       e.keyLocation = 0;
       // Semicolon
-      if (UEM.kctoi) {
+      if (UEMKB.kctoi) {
         e.keyIdentifier = UEMKB.kctoi(e.keyCode);
       }
       else if (e.keyCode == 59) e.keyIdentifier = "U+003B";
@@ -56,7 +58,7 @@ if (navigator.appName == "Opera") {
     function(e) {
       e.keyLocation = 0;
         // Semicolon
-        else if (UEM.kctoi) {
+        if (UEMKB.kctoi) {
           e.keyIdentifier = UEMKB.kctoi(e.keyCode);
         }
         else if (e.keyCode == 59) e.keyIdentifier = "U+003B";
