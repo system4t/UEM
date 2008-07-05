@@ -233,7 +233,11 @@ UEMKB.kctoi = function(keycode) {
     var kc = 0;
     kc = keycode;
     var kcs = kc.toString(10);
-    var xmap = UEMKB.kc2iCommon[kcs];
+    // BUG
+    // The common control character mapping is not
+    // working.  The '-' key on Opera, for instance, has keycode 45 which
+    // kc2iCommon would map to 'Insert'.
+    var xmap = null; // UEMKB.kc2iCommon[kcs];
     if (!xmap) {
         xmap = UEMKB.addMap[kcs];
         if (!xmap) {
