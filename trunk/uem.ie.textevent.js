@@ -2,10 +2,12 @@
 
 if (document.createEventObject) {
   // Constructor
+  /*@cc_on
   function TextEvent() {
     this.data = null;
     this.detail = undefined;
   };
+  @*/
   // Inherit from UIEvent
   TextEvent.prototype = new UIEvent();
   // Reset constructor

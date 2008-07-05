@@ -3,6 +3,7 @@
 
 if (document.createEventObject) {
   // Constructor
+  /*@cc_on
   function KeyboardEvent() {
     this.altKey = null;
     this.ctrlKey = null;
@@ -14,6 +15,7 @@ if (document.createEventObject) {
     // Carry keycode for the case where the code does not load the keyboard event maps.
     this.keycode = undefined;
   }
+  @*/
   // Inherit from UIEvent
   KeyboardEvent.prototype = new UIEvent();
   // Reset constructor

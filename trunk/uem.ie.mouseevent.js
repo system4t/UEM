@@ -2,6 +2,7 @@
 
 if (document.createEventObject) {
   // Constructor
+  /*@cc_on
   function MouseEvent() {
     this.altKey = null;
     this.button = null;
@@ -14,6 +15,7 @@ if (document.createEventObject) {
     this.screenY = null;
     this.shiftKey = null;
   };
+  @*/
   // Inherit from UIEvent
   MouseEvent.prototype = new UIEvent();
   // Reset constructor
