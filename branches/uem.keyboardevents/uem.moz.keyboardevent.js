@@ -4,6 +4,8 @@
 if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") {
   
   UEM = {};
+  UEMKB = {};
+  UEMKB.ix = {};
 
   /**
    * Keypress handler that adds the data property to the event.  This is a

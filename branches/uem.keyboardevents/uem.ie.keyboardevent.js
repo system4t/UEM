@@ -2,9 +2,6 @@
 // See trunk/uem.keyboardevent.identifiertable.js for notes on keyboard events
 
 if (document.createEventObject) {
-  // Keyboard Common
-  UEMKB = {};
-  UEMKB.ix = {};
 
   // Constructor
   function KeyboardEvent() {
