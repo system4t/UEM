@@ -101,7 +101,7 @@ if (document.createEventObject) {
         if (type == 'load')
           window.attachEvent('onload',function(){var e = UEM.createEventObject(window.event); fnc(e);});
         else {
-          UEM.ADD_TO_WINDOW = true
+          UEM.ADD_TO_WINDOW = true;
           arguments.callee.call(window, type, fnc, useCapture);
           UEM.ADD_TO_WINDOW = false;
         }
