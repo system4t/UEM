@@ -44,6 +44,8 @@ if (document.createEventObject) {
 
   // Declare namespace
   UEM = {};
+  UEMKB = {};
+  UEMKB.ix = {};
 
   // Include support for assigning event handlers
   // through innerHTML or assigning as properties.
@@ -347,7 +349,7 @@ if (document.createEventObject) {
       }
       return true;
     };
-  
+
   // List of tags which can not have event listeners
   UEM.noEvents = ['br','style','script','head','meta','link','title'];
   
@@ -372,7 +374,7 @@ if (document.createEventObject) {
       // Don't know wheter this is W3C but Firefox is using DOMMouseScroll
       DOMMouseScroll: 'mousewheel'
     };
-  
+
   /**
    * Convert functions defined as inline event handlers
    * to proper event listeners.
@@ -420,7 +422,7 @@ if (document.createEventObject) {
         // Cancel bubbling - UEM takes care of this
         window.event.cancelBubble = true;
         // Create a proper W3C event object
-        var e = UEM.createEventObject(window.event);
+        e = UEM.createEventObject(window.event);
       }
       // Shortcut - the type of event. 'UEM' string added to minimize chance of property already existing.
       var eType = 'UEM' + e.type;
@@ -513,7 +515,7 @@ if (document.createEventObject) {
       }
       return true;
     };
-  
+
   /***********************************************
    *
    *
@@ -535,7 +537,7 @@ if (document.createEventObject) {
   document.dispatchEvent = UEM.dispatchEvent
   document.removeAllEventListeners = UEM.removeAllEventListeners;
   
-  
+
   // Define Event interface for elements
   HTMLElement.prototype.addEventListener = UEM.addEventListener;
   HTMLElement.prototype.removeEventListener = UEM.removeEventListener;
@@ -572,7 +574,7 @@ if (document.createEventObject) {
         }
       }
     };
-  
+
   /**
    * A property change listener.  It's purpose is to add an event listener
    * if required by some property change event.  The property
@@ -1000,4 +1002,4 @@ if (document.createEventObject) {
         eventClass: 'Event'
       }
     };
-  }
+}
