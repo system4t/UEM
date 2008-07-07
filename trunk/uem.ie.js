@@ -1,28 +1,3 @@
-// Copyright 2007 - 2008 The JSLab Team, Tavs Dokkedahl and Allan Jacobs
-// Contact: http://www.jslab.dk/contact.php
-//
-// This file is part of the Element Prototype Extension (EPE) Program.
-//
-// EPE is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// any later version.
-//
-// EPE is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-//  Credits - Many thanks to
-//  
-//  Laus Jensen     - For spending countless hours reading the W3C specifications and
-//                    co-developing the very first prototype of UEM.
-//  David Flanagan  - For writing The Definitive Guide and for comments on this project.
-//  Allan Jacobs    - For fixing numerous bugs and co-working on the project.
-
 // Content
 //  1. User configurable settings
 //  2. W3C EventListener Interface
