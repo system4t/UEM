@@ -24,70 +24,55 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     }
   },
   true
-  );
+);
     
   /**
-   * Keyup and keydown handler that adds the keyIdentifier and keyLocation
-   * properties to the event.  This is a capture phase and unless the developer
+   * Keyup listener adds the keyIdentifier and keyLocation
+   * properties to the event.  This is a capture phase listener and unless the developer
    * gets creative, the first such capture phase handler for keyboard events.
    * This means that this handler will make the keyIdentifier property available
    * to all other keyboard event handlers in this document.
+   * 
+   * Now declaring the same function twice in order to avoid declaring in global namespace
+   * Although redundant it doesn't really matter as this code is only executed once when
+   * the document loads.
    */
-  
-  // Now declaring the same function twise in order to avoid declaring in global namespace
-  // Although redundant it doesn't really matter as this code is only executed once when
-  // the document loads
   document.addEventListener(
   "keyup",
   function(e) {
     if (UEMKB.kctoi) {
       e.keyIdentifier = UEMKB.kctoi(e.keyCode);
     }
-    else if (e.keyCode == 59) {
-      // Semicolon
-      e.keyIdentifier = "U+003B";
-    }
-    else if (e.keyCode == 61) {
-      // Equals
-      e.keyIdentifier = "U+003D";
-    }
-    else if (e.keyCode == 109) {
-      // Minus
-      e.keyIdentifier = "U+002D";
-    }
     else {
-      e.keyIdentifier = "";
+      e.keyIdentifier = "U+0000";
     }
     e.keyLocation = 0;
   },
-  true
-  );
-  
+  true);
+  /**
+   * Keydown listener adds the keyIdentifier and keyLocation
+   * properties to the event.  This is a capture phase listener and unless the developer
+   * gets creative, the first such capture phase handler for keyboard events.
+   * This means that this handler will make the keyIdentifier property available
+   * to all other keyboard event handlers in this document.
+   * 
+   * Now declaring the same function twice in order to avoid declaring in global namespace
+   * Although redundant it doesn't really matter as this code is only executed once when
+   * the document loads.
+   */
   document.addEventListener(
   "keydown",
   function(e) {
     if (UEMKB.kctoi) {
       e.keyIdentifier = UEMKB.kctoi(e.keyCode);
     }
-    else if (e.keyCode == 59) {
-      // Semicolon
-      e.keyIdentifier = "U+003B";
-    }
-    else if (e.keyCode == 61) {
-      // Equals
-      e.keyIdentifier = "U+003D";
-    }
-    else if (e.keyCode == 109) {
-      // Minus
-      e.keyIdentifier = "U+002D";
-    }
     else {
-      e.keyIdentifier = "";
+      e.keyIdentifier = "U+0000";
     }
     e.keyLocation = 0;
   },
-    true
-  );
+  true);
+
   function TextEvent() {
     this.data = null;
   }
@@ -106,16 +91,20 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
     function(type, canBubble, cancelable, view, data) {
     var charCode = data.charCodeAt(0);
     var keyCode = charCode;
+    // shift, alt, ctrl, and meta flags are not attributes of the
+    // level 3 TextEvent.  Loss of this information is tolerable.  Generating
+    // it would require another large sest of maps and a hefty download
+    // cost.
     var iShift = (62 <= keyCode && keyCode <= 90 ||
       33 <= keyCode && keyCode <= 42 ||
       keyCode == 58 || keyCode == 60 ||
       94 <= keyCode && keyCode <= 95 ||
       123 <= keyCode && keyCode <= 126 ||
       data == "+" || data == ":" || data == "_");
-    
+    var alt = false;
     this.initKeyEvent(type,canBubble, cancelable, view,
     false,
-    false,
+    alt,
     iShift,
     false, keyCode, charCode);
   };
@@ -134,27 +123,17 @@ if (navigator.product == "Gecko" && navigator.vendor != "Apple Computer, Inc.") 
    */
   TextEvent.prototype.initKeyboardEvent =
     function(type, canBubble, cancelable, view, keyIdentifier, keyLocation, modifierList) {
-    var ishift = modifierList.contains(/Shift/);
-    var keyCode;
-    if (UEMKB.itokc)
-      keyCode = UEMKB.itokc(keyIdentifier); 
-    // semicolon or colon
-    else if (keyIdentifier == "U+003B" || keyIdentifier == "U+003A")
-      keyCode = 59;
-    // equals or plus
-    else if (keyIdentifier == "U+003D" || keyIdentifier == "U+002B")
-      keyCode = 61;
-    // minus or underscore
-    else if (keyIdentifier == "U+002D" || keyIdentifier == "U+005F")
-      keyCode = 109;
-    var charCode = 0;
-    this.keyIdentifier = keyIdentifier;
-    this.keyLocation = keyLocation;
-    this.initKeyEvent(type,canBubble, cancelable, view,
-    modifierList.contains(/Control/),
-    modifierList.contains(/Alt/), 
-    ishift,
-    false, keyCode, charCode);
+    if (UEMKB.itokc) {
+      var keyCode = UEMKB.itokc(keyIdentifier);
+      var charCode = 0;
+      this.keyIdentifier = keyIdentifier;
+      this.keyLocation = keyLocation;
+      this.initKeyEvent(type,canBubble, cancelable, view,
+        modifierList.contains(/Control/),
+        modifierList.contains(/Alt/), 
+        modifierList.contains(/Shift/),
+        false, keyCode, charCode);
+    }
   };
 
 }

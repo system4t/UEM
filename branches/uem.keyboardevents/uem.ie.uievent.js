@@ -2,12 +2,14 @@
 
 if (document.createEventObject) {
   // Constructor
+  /*@cc_on
   function UIEvent() {
     // Rest of properties should be set with initUIEvent
     this.detail = null;
     this.view = window;
     // Extend to include all properties of Event object
   }
+  @*/
   // Inherit from Event
   UIEvent.prototype = new Event();
   // Reset constructor

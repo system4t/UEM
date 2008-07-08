@@ -1,4 +1,4 @@
-// MouseScroll correction for Safari/Win
+// DOMMouseScroll correction for Safari/Win
 if (/safari/i.test(navigator.userAgent)) {
   // Unfortunately we can't assign to e.detail so we have
   // to create a new event and dispatch that instead

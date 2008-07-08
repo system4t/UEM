@@ -8,6 +8,7 @@ if (document.createEventObject) {
    * @returns A new Event object
    * @type Event
    */
+  /*@cc_on
   function Event() {
     this.bubbles = null;
     this.cancelable = null;
@@ -17,6 +18,7 @@ if (document.createEventObject) {
     this.timeStamp = null;
     this.type = null;
   }
+  @*/
   // Constants
   Event.CAPTURING_PHASE = 1;
   Event.AT_TARGET = 2;

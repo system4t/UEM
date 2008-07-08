@@ -92,7 +92,7 @@ if (document.createEventObject) {
    *     If false, the handler is available for invocation during the target
    *     and bubble phases.
    */
-  UEM.ADD_TO_WINDOW = false; 
+  UEM.ADD_TO_WINDOW = true; 
   UEM.addEventListener = 
     function(type, fnc, useCapture) {
       // For unknown reasons 'this' is not equal to window if a function
