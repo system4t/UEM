@@ -595,7 +595,7 @@ if (document.createEventObject) {
       e.initUEMEvent(ie_event);
       // Determine general properties
       // If bubbling is enabled check whether event type actually bubbles
-      var bubbles = ie_event.cancelBubble === false ? UEM.doesBubble(ie_event.type) : true;
+      var bubbles = UEM.doesBubble(ie_event.type);
       // If canceling is enabled (or not set at all) check whether event type can actually be cancelled
       // The cancelable property is set by Event.prototype.toIE when event is created from Element.dispatch
       var cancelable = ie_event.cancelable !== false || ie_event.cancelable === undefined ? UEM.isCancelable(ie_event.type) : false;
