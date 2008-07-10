@@ -106,10 +106,31 @@ if (document.createEventObject) {
       // Create object for storing function reference to event handler
       // and boolean for using capture or not
       this[eType][l] = {};
-      // Remember whether we want to use the capture phase or not
-      this[eType][l].useCapture = useCapture;
-      // Save function reference
-      this[eType][l].fnc = fnc;
+      // If this is a capture handler insert it as the last capture handler but
+      // before any target/bubbling handler to prevent out-of-order execution
+      // in the target phase.
+      if (useCapture) {
+        // Find first bubbling handler
+        for(var i=0; i<l; i++) {
+          if (!this[eType][i].useCapture)
+            break;
+        }
+        // i is the position for the new capture handler
+        var bHandlers = this[eType].splice(i);
+        // Remember whether we want to use the capture phase or not
+        this[eType][i].useCapture = useCapture;
+        // Save function reference
+        this[eType][i].fnc = fnc;
+        // Concat arrays
+        this[eType].concat(bHandlers);
+      }
+      // This is a target/bubbling handler just append to array
+      else {
+        // Remember whether we want to use the capture phase or not
+        this[eType][l].useCapture = useCapture;
+        // Save function reference
+        this[eType][l].fnc = fnc;
+      }
       // Declare the event handler for this type of event to be the UEM.Wrapper
       this['on'+type] = UEM.wrapper;
       // Enable watching of property changes
