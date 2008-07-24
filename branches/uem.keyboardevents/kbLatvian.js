@@ -60,7 +60,7 @@ UEMKB.LatvianchgMap = [
 // IE Latvian
 {},
 // FF Latvian
-{"222":"00B0"},
+{},
 // OP Latvian
 {}
 ];
