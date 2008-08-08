@@ -103,9 +103,6 @@ if (document.createEventObject) {
           return;
         }
       }
-      // Create object for storing function reference to event handler
-      // and boolean for using capture or not
-      this[eType][l] = {};
       // If this is a capture handler insert it as the last capture handler but
       // before any target/bubbling handler to prevent out-of-order execution
       // in the target phase.
@@ -116,16 +113,23 @@ if (document.createEventObject) {
             break;
         }
         // i is the position for the new capture handler
-        var bHandlers = this[eType].splice(i);
+        // IE needs 2nd argument for array.splice - this is an error in IE
+        var bHandlers = this[eType].splice(i, this[eType].length - i);
+        // Create object for storing function reference to event handler
+        // and boolean for using capture or not
+        this[eType][i] = {};
         // Remember whether we want to use the capture phase or not
         this[eType][i].useCapture = useCapture;
         // Save function reference
         this[eType][i].fnc = fnc;
         // Concat arrays
-        this[eType].concat(bHandlers);
+        this[eType] = this[eType].concat(bHandlers);
       }
       // This is a target/bubbling handler just append to array
       else {
+        // Create object for storing function reference to event handler
+        // and boolean for using capture or not
+        this[eType][l] = {};
         // Remember whether we want to use the capture phase or not
         this[eType][l].useCapture = useCapture;
         // Save function reference
@@ -468,7 +472,18 @@ if (document.createEventObject) {
             // dispatched directly to this element unless this option is enabled by user
             if (!this[eType][i].useCapture || UEM.CAPTURE_ON_TARGET) {
               // Execute event handler
+              try {
               this[eType][i].fnc.call(this,e);
+              }
+              catch(err) {
+                alert(this[eType][0].fnc);
+                var s = '';
+                var o = this[eType][i];
+                for(var p in o)
+                  s += p + ': ' + o[p] + '\n';
+                alert(s);
+                alert(e.target.tagName);
+              }
               // Check whether stopPropagation() has been called
               if (e.propagationStopped)
                 return false;
