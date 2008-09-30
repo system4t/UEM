@@ -472,18 +472,7 @@ if (document.createEventObject) {
             // dispatched directly to this element unless this option is enabled by user
             if (!this[eType][i].useCapture || UEM.CAPTURE_ON_TARGET) {
               // Execute event handler
-              try {
               this[eType][i].fnc.call(this,e);
-              }
-              catch(err) {
-                alert(this[eType][0].fnc);
-                var s = '';
-                var o = this[eType][i];
-                for(var p in o)
-                  s += p + ': ' + o[p] + '\n';
-                alert(s);
-                alert(e.target.tagName);
-              }
               // Check whether stopPropagation() has been called
               if (e.propagationStopped)
                 return false;
