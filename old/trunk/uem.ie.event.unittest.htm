@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
+    <title>UEM Test - Basic features</title>
+    <!-- EPE  -->
+    <script type="text/javascript" src="../../epe/trunk/epe.ie.htmlelement.js"></script>
+    <!-- UEM for IE  -->
+    <script type="text/javascript" src="uem.ie.js"></script>
+    <!-- UEM Event for IE  -->
+    <script type="text/javascript" src="uem.ie.event.js"></script>
+    <script type="text/javascript">
+      
+      function test() {
+        // Test Event interface on body element
+        var body = document.documentElement.childNodes[1];
+        alert(body.addEventListener);
+        alert(body.removeEventListener);
+        alert(body.dispatchEvent);
+      }
+      
+    </script>
+  </head>
+  <body onload="test();">
+    <script type="text/javascript">
+      if (window.EPE) {
+        EPE.__R1 = document.documentElement.childNodes[1].onload;
+        document.documentElement.childNodes[1].onload = EPE.init;
+      }
+    </script>
+  </body>
+</html>

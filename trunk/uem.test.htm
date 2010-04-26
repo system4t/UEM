@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <title>JavaScript Lab - UEM Test</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    
+    <!-- ***********************
+            EPE
+    ************************ -->
+    
+    <!--[if lt IE 8]>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie67/epe.js"></script>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie67/epe.createelement.js"></script>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie67/epe.extend.js"></script>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie67/epe.tags.js"></script>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie67/epe.init.js"></script>
+    <![endif]-->
+    <!--[if IE 8]>
+      <script type="text/javascript" src="../../../common/js/epe/trunk/ie8/epe.js"></script>
+    <![endif]-->
+    
+    <!-- ***********************
+            UEM
+    ************************ -->
+    
+    <!--[if IE]>
+    
+      <!-- UEM -->
+      <script type="text/javascript" src="uem/uem.js"></script>
+      <script type="text/javascript" src="uem/uem.addeventlistener.js"></script>
+      <script type="text/javascript" src="uem/uem.removeeventlistener.js"></script>
+      <script type="text/javascript" src="uem/uem.createevent.js"></script>
+      <script type="text/javascript" src="uem/uem.dispatchevent.js"></script>
+      <script type="text/javascript" src="uem/uem.removealleventlisteners.js"></script>
+      <script type="text/javascript" src="uem/uem.getpossibleeventtypes.js"></script>
+      <script type="text/javascript" src="uem/uem.elementeventtypes.js"></script>
+      <script type="text/javascript" src="uem/uem.canhaveevents.js"></script>
+      <script type="text/javascript" src="uem/uem.geteventtype.js"></script>
+      <script type="text/javascript" src="uem/uem.wrapper.js"></script>
+      <script type="text/javascript" src="uem/uem.bindepe.js"></script>
+      <script type="text/javascript" src="uem/uem.createeventobject.js"></script>
+      <script type="text/javascript" src="uem/uem.iscancelable.js"></script>
+      <script type="text/javascript" src="uem/uem.doesbubble.js"></script>
+      <script type="text/javascript" src="uem/uem.getbutton.js"></script>
+      <script type="text/javascript" src="uem/uem.getiebutton.js"></script>
+      <script type="text/javascript" src="uem/uem.geteventclass.js"></script>
+      <script type="text/javascript" src="uem/uem.eventtable.js"></script>
+      <!-- Event -->
+      <script type="text/javascript" src="event/event.js"></script>
+      <script type="text/javascript" src="event/event.prototype.initevent.js"></script>
+      <script type="text/javascript" src="event/event.prototype.stoppropagation.js"></script>
+      <script type="text/javascript" src="event/event.prototype.preventdefault.js"></script>
+      <script type="text/javascript" src="event/event.prototype.inituemevent.js"></script>
+      <script type="text/javascript" src="event/event.prototype.propagate.js"></script>
+      <!-- UIEvent -->
+      <script type="text/javascript" src="uievent/uievent.js"></script>
+      <script type="text/javascript" src="uievent/uievent.prototype.inituievent.js"></script>
+      <!-- MouseEvent -->
+      <script type="text/javascript" src="mouseevent/mouseevent.js"></script>
+      <script type="text/javascript" src="mouseevent/mouseevent.prototype.initmouseevent.js"></script>
+      
+    <![endif]-->
+    
+    <!-- ***********************
+            LIB
+    ************************ -->
+    
+    <!-- Event --> 
+    <script type="text/javascript" src="../../../common/js/lib/trunk/event/event.drag.js"></script>
+    
+    <script type="text/javascript">
+      
+      HTMLDivElement.prototype.test =
+        function() {
+          alert('test of HTMLDivElement');
+        };
+      
+      
+      HTMLElement.prototype.test =
+        function() {
+          alert('test of HTMLElement');
+        };
+      
+      HTMLBodyElement.prototype.test =
+        function() {
+          alert('test of HTMLBodyElement');
+        };
+
+      function main() {
+        Event.enableDrag();
+        var red = document.getElementById('red');
+        var blue = document.getElementById('blue');
+        red.addEventListener('drag',
+          function(e) {
+            e.move();
+           },
+          true
+        );
+        
+        blue.addEventListener('drop',
+          function(e) {
+            alert(e.relatedTarget.id + ' dropped here');
+           },
+          true
+        );
+        
+      }
+      
+      window.addEventListener('load', main ,true);
+      
+    </script>
+    <style type="text/css">
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Tahoma, sans-serif;
+        font-size: 11px;
+      }
+      
+      #red, #blue {
+        width: 200px;
+        height: 200px;
+        border: 1px solid #000;
+        position: absolute;
+      }
+      
+      #red {
+        width: 100px;
+        height: 100px;
+        left: 250px;
+        top: 100px;
+        background: red;
+      }
+     
+      #blue {
+        left: 400px;
+        top: 100px;
+        background: blue;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <div id="blue"></div>
+    <div id="red"></div>
+    <!--[if lt IE 8]>
+    <script type="text/javascript">
+      EPE.init();
+    </script>
+    <![endif]-->
+  </body>
+</html>
