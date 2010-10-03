@@ -20,6 +20,8 @@
 */
 UEM.addEventListener =
   function(type, fnc, useCapture) {
+    if (!fnc || fnc.constructor != Function)
+      throw new Error('Invalid function argument for UEM.addEventListener');
     // For unknown reasons 'this' is not equal to window if a function
     // which is defined on an object is called as a method on window
     // Using call solves it.
