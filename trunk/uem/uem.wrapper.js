@@ -28,14 +28,11 @@ UEM.wrapper =
     var aBub = [];
     var n = this;
     // Add all parent nodes which have an event function for this event type
-    while((n = n.parentNode) != null) {
-      if (n[eType])
+    while((n = n.parentNode) != null)
         aCap.push(n);
-    }
-    // Insert document in propagation chain ONLY if target is document and
+    // Insert window in propagation chain ONLY if target is window and
     // type of handler exist for document
-    if (this == document && document[eType])
-      aCap.push(document);
+    // TODO: Check if this assumption is correct
     if (this == window && window[eType])
       aCap.push(window);
     // Reverse capture array to simulate capture phase
@@ -89,24 +86,10 @@ UEM.wrapper =
     }
     // Only do bubbling phase if event bubbles
     if (e.bubbles) {
-      // We have to iterate again as handlers in the
-      // capture or atTarget phases might have removed/added
-      // other handlers
-      n = this;
-      while((n = n.parentNode) != null) {
-        if (n[eType])
-          aBub.push(n);
-      }
-      // Insert document in propagation chain ONLY if target is document and
-      // type of handler exist for document
-      if (this == document && document[eType])
-        aBub.push(document);
-      if (this == window && window[eType])
-        aBub.push(window);
       // Event phase changes to BUBBLING_PHASE
       e.eventPhase = Event.BUBBLING_PHASE;
       // For all elements in bubbling chain. Return false if propagation was stopped
-      if (!e.propagate(aBub,false))
+      if (!e.propagate(aCap.reverse(),false))
         return false;
     }
     return true;
