@@ -26,10 +26,14 @@ UEM.wrapper =
     var aCap = [];
     // Temp. array for event functions higher up in the DOM structure - bubbling phase
     var aBub = [];
+    if (window._UEMDebug)
+      console.log('****************************\n' + e.type + ' event started by ' + this);
     var n = this;
     // Add all parent nodes which have an event function for this event type
     while((n = n.parentNode) != null)
-        aCap.push(n);
+      aCap.push(n);
+    if (aCap[aCap.length-1] != document)
+      aCap.push(document);
     // Insert window in propagation chain ONLY if target is window and
     // type of handler exist for document
     // TODO: Check if this assumption is correct
@@ -63,14 +67,21 @@ UEM.wrapper =
         // for the document object - at least not in Firefox, Opera and Safari so we also
         // avoid it
         if (this != document) {
+          if (window._UEMDebug)
+            console.log('AT TARGET PHASE ' + e.type);
           // Do not trigger a capture phase handler for this element for an event
           // dispatched directly to this element unless this option is enabled by user
           if (!this[eType][i].useCapture || UEM.CAPTURE_ON_TARGET) {
+            if (window._UEMDebug)
+              console.log(this + 'executing (' + e.eventPhase + ') ' + i + ': ' + this[eType][i].fnc.toString().substring(0, 200));
             // Execute event handler
             this[eType][i].fnc.call(this,e);
             // Check whether stopPropagation() has been called
-            if (e.propagationStopped)
+            if (e.propagationStopped) {
+              if (window._UEMDebug)
+                console.log('PROPAGATION STOPPED (' + this.eventPhase + ') by fnc ' + j + ' of ' + chain[i]);
               return false;
+            }
             // It is possible that this['UEM'+e.type] has now been modified
             // If this['UEM'+e.type] does not exist anymore just break
             if (!this[eType])
